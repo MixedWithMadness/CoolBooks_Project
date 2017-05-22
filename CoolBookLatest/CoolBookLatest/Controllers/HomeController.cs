@@ -15,7 +15,7 @@ namespace CoolBookLatest.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Coolbooks - The modern review system.";
 
             return View();
         }
