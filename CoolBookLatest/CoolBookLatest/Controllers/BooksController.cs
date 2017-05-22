@@ -15,10 +15,25 @@ namespace CoolBookLatest.Controllers
     public class BooksController : Controller
     {
         private CoolBooksEntities db = new CoolBooksEntities();
+        /// <summary>
+        /// This will show the list of Books added by the logged in user
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        public async Task<ActionResult> MyBooks()
+        {
 
+            String userId = User.Identity.GetUserId();
+
+
+            var myBooks = db.Books.Where(b => b.UserId.Equals(userId));
+            return View(await myBooks.ToListAsync());
+        }
         // GET: Books
         public async Task<ActionResult> Index()
         {
+         
+
             var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
             return View(await books.ToListAsync());
         }
