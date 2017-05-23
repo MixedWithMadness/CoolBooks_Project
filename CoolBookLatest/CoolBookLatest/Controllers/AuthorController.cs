@@ -16,7 +16,7 @@ namespace CoolBookLatest.Controllers
         CoolBooksEntities db = new CoolBooksEntities();
         public async Task<ActionResult> Index()
         {
-            var authorsList =  db.Authors.Where(a => a.IsDeleted== false);  
+            var authorsList =  db.Authors.Where(a => a.IsDeleted== false);  // author which is not deleted
             
             // show only authors which are not deleted
             // conflict arises with books if we really remove the author from Database
@@ -33,9 +33,11 @@ namespace CoolBookLatest.Controllers
         [HttpPost]
         public async Task<ActionResult> Create (Authors gotten) // ModelBinder may also treat data returned with a form as a Author
         {
-            if(ModelState.IsValid)
+            gotten.Created = DateTime.Now;
+
+            if (ModelState.IsValid)
             {
-                gotten.Created = DateTime.Now;   // Need to remove Required constraint in AuthorsTable later on
+                 // Need to remove Required constraint in AuthorsTable later on
                 db.Authors.Add(gotten);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Author");
