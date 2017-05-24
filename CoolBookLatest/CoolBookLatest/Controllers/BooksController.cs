@@ -31,17 +31,45 @@ namespace CoolBookLatest.Controllers
             return View(await myBooks.ToListAsync());
         }
         // GET: Books
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sortOrder,int AuthorId = 0)
         {
-            if (Request.IsAuthenticated)
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", "LastName");
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+
+            
+            var books = from s in db.Books
+                        select s;
+
+            if (!Request.IsAuthenticated)
             {
-                var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
-                return View(await books.ToListAsync());
-            }else
-            {
-                var books = db.Books.Include(b => b.Authors).Include(b => b.Genres).Where(b => b.IsDeleted != true);
-                return View(await books.ToListAsync());
+                books = books.Where(b => b.IsDeleted != true);
             }
+
+            if(AuthorId != 0)
+            {
+                books = books.Where(b => b.AuthorId == AuthorId);
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    books = books.OrderByDescending(s => s.Title);
+                    break;
+                case "Date":
+                    books = books.OrderBy(s => s.PublishDate);
+                    break;
+                case "date_desc":
+                    books = books.OrderByDescending(s => s.PublishDate);
+                    break;
+                default:
+                    books = books.OrderBy(s => s.Title);
+                    break;
+            }
+
+            return View(await books.ToListAsync());
         }
 
         // GET: Books/Details/5

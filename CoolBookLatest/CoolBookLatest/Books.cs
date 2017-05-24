@@ -11,7 +11,8 @@ namespace CoolBookLatest
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Books
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -29,6 +30,10 @@ namespace CoolBookLatest
         public Nullable<short> Part { get; set; }
         public string Description { get; set; }
         public string ISBN { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.DateTime)]
+
         public Nullable<System.DateTime> PublishDate { get; set; }
         public string ImagePath { get; set; }
         public System.DateTime Created { get; set; }
