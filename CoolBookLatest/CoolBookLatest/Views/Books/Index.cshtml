@@ -35,12 +35,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Created)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.AspNetUsers.Email)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Authors.FirstName)
         </th>
@@ -76,14 +76,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.Created)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.IsDeleted)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
-        </td>
+        </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Authors.FirstName)
+            @Html.DisplayFor(modelItem => item.Authors.FirstName),
+            @Html.DisplayFor(modelItem => item.Authors.LastName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Genres.Name)

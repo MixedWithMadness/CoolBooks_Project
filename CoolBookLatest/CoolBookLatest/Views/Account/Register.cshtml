@@ -1,4 +1,5 @@
-﻿@model CoolBookLatest.Models.RegisterViewModel
+﻿@using CoolBookLatest.Enums;
+@model CoolBookLatest.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -22,7 +23,12 @@
     </div>
 
     //Here can we write a dropdownlist code for enum
-
+    <div class="form-group">
+        @Html.LabelFor(m => m.listOfCountries, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(m => m.listOfCountries, new { @class = "form-control" })
+        </div>
+    </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
