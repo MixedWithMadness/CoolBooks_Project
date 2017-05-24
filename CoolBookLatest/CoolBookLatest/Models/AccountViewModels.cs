@@ -72,16 +72,45 @@ namespace CoolBookLatest.Models
         public string Email { get; set; }
 
         [Required]
-        [MinLength(3)] 
-        [Display(Name = "FirstName")]
+        [MinLength(3)]
+        [MaxLength(45)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        public  Countries listOfCountries {get; set;}
 
         [Required]
         [MinLength(3)]
-        [Display(Name = "LastName")]
+        [MaxLength(45)]
+
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+
+        [Display(Name = "Country")]
+        public  Countries listOfCountries {get; set;}
+
+
+        [Display(Name = "Gender")]
+        public Gender selectedGener { get; set; }
+
+        
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date Of Birth")]
+        public DateTime DateOfBirth { get; set; }
+
+
+        [Required]
+        [MinLength(3)]
+        [MaxLength(45)]
+        [Display(Name = "Address")]
+        public String Address { get; set; }
+
+        
+        [MaxLength(15)]
+        [Display(Name = "Zip Code")]
+        public string ZipCode { get; set; }
 
         [Required]
 
@@ -93,20 +122,16 @@ namespace CoolBookLatest.Models
         [Display(Name = "IsDeleted")]
         public bool IsDeleted { get; set; }
 
-
+        [MaxLength(35)]
         [Display(Name = "City")]
         public string City { get; set; }
 
-
-        [Required]
-        [MinLength(7)]
-        [Display(Name = "PhoneNumber")]
+       
+       
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Enter a valid phone number")]
         public string PhoneNumber { get; set; }
 
-        //[Required]
-
-        //[Display(Name = "DateOfBirth")]
-        //public string DateOfBirth { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CoolBookLatest.Models;
+using System.Data.Entity.Validation;
 
 namespace CoolBookLatest.Controllers
 {
@@ -168,12 +169,32 @@ namespace CoolBookLatest.Controllers
                 tempUser.Created = model.Created;
                 tempUser.FirstName = model.FirstName;
                 tempUser.LastName = model.LastName;
-                var result = await UserManager.CreateAsync(user, model.Password);
-                db.Users.Add(tempUser);
-                db.SaveChanges();
+                tempUser.Country = model.listOfCountries.ToString();
+                tempUser.ZipCode = model.ZipCode;
+                tempUser.Address = model.Address;
+                tempUser.City = model.City;
+                tempUser.Birthdate = model.DateOfBirth;
 
+
+
+                //tempUser.Gender = model.selectedGener.ToString();
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                if(model.selectedGener.ToString()=="Male")
+                {
+                    tempUser.Gender = "1";
+                }
+                else
+                {
+                    tempUser.Gender = "0";
+                }
+
+                db.Users.Add(tempUser);
+
+                db.SaveChanges();
+               
                 //Write here code for adding Data into UserTable
-            
+
 
                 if (result.Succeeded)
                 {

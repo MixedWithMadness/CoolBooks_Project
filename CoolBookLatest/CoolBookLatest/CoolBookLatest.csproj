@@ -197,6 +197,7 @@
       <DependentUpon>OurDBMODEL.tt</DependentUpon>
     </Compile>
     <Compile Include="Enums\Countries.cs" />
+    <Compile Include="Enums\Gender.cs" />
     <Compile Include="Genres.cs">
       <DependentUpon>OurDBMODEL.tt</DependentUpon>
     </Compile>
