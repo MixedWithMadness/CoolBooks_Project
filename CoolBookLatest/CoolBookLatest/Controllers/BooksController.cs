@@ -53,13 +53,14 @@ namespace CoolBookLatest.Controllers
             }
             
             Books books = await db.Books.FindAsync(id);
-            if (!Request.IsAuthenticated && books.IsDeleted == true)
-            {
-                return HttpNotFound();
-            }
+            
             if (books == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Books");
+            }
+            if (!Request.IsAuthenticated && books.IsDeleted == true)
+            {
+                return RedirectToAction("Index", "Books");
             }
             return View(books);
         }
