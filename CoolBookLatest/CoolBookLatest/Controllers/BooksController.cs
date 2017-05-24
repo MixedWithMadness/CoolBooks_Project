@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using CoolBookLatest;
 using Microsoft.AspNet.Identity;
+using CoolBookLatest.Models;
 
 namespace CoolBookLatest.Controllers
 {
@@ -32,10 +33,15 @@ namespace CoolBookLatest.Controllers
         // GET: Books
         public async Task<ActionResult> Index()
         {
-         
-
-            var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
-            return View(await books.ToListAsync());
+            if (Request.IsAuthenticated)
+            {
+                var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
+                return View(await books.ToListAsync());
+            }else
+            {
+                var books = db.Books.Include(b => b.Authors).Include(b => b.Genres).Where(b => b.IsDeleted != true);
+                return View(await books.ToListAsync());
+            }
         }
 
         // GET: Books/Details/5
@@ -45,10 +51,16 @@ namespace CoolBookLatest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Books books = await db.Books.FindAsync(id);
+            
             if (books == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Books");
+            }
+            if (!Request.IsAuthenticated && books.IsDeleted == true)
+            {
+                return RedirectToAction("Index", "Books");
             }
             return View(books);
         }
@@ -69,22 +81,39 @@ namespace CoolBookLatest.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,UserId,AuthorId,GenreId,Title,AlternativeTitle,Part,Description,ISBN,PublishDate,ImagePath,Created,IsDeleted")] Books books)
+        public async Task<ActionResult> Create([Bind(Include = "AuthorId,GenreId,Title,AlternativeTitle,Part,Description,ISBN,PublishDate,ImagePath")] BookViewModel vm)
         {
-            books.UserId = HttpContext.User.Identity.GetUserId();
-            books.Created = HttpContext.Timestamp;
+            //Books newBook = vm;
+            Books newBook = new Books();
+            newBook = vm.VMToBooks(newBook);
+
+            //    AuthorId = books.AuthorId,
+            //    GenreId = books.GenreId,
+            //    Title = books.Title,
+            //    AlternativeTitle = books.AlternativeTitle,
+            //    Part = books.Part,
+            //    Description = books.Description,
+            //    ISBN = books.ISBN,
+            //    PublishDate = books.PublishDate,
+            //    ImagePath = books.ImagePath,
+            //    Authors = books.Authors,
+            //    Genres = books.Genres
+
+            newBook.UserId = HttpContext.User.Identity.GetUserId();
+            newBook.Created = HttpContext.Timestamp;
+            newBook.IsDeleted = false;
 
             if (ModelState.IsValid)
             {
-                db.Books.Add(books);
+                db.Books.Add(newBook);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
             
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", books.AuthorId);
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", books.GenreId);
-            return View(books);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", newBook.AuthorId);
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", newBook.GenreId);
+            return View(newBook);
         }
 
         // GET: Books/Edit/5
@@ -102,10 +131,14 @@ namespace CoolBookLatest.Controllers
                 return HttpNotFound();
             }
 
+            BookViewModel vm = new BookViewModel();
+            vm = books;
+
+
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", books.UserId);
             ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", books.AuthorId);
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", books.GenreId);
-            return View(books);
+            return View(vm);
         }
 
         // POST: Books/Edit/5
@@ -114,8 +147,12 @@ namespace CoolBookLatest.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,UserId,AuthorId,GenreId,Title,AlternativeTitle,Part,Description,ISBN,PublishDate,ImagePath,Created,IsDeleted")] Books books)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,AuthorId,GenreId,Title,AlternativeTitle,Part,Description,ISBN,PublishDate,ImagePath")] BookViewModel vm)
         {
+            Books books = await db.Books.FindAsync(vm.Id);
+            books = vm.VMToBooks(books);
+
+
             if (ModelState.IsValid)
             {
                 db.Entry(books).State = EntityState.Modified;
@@ -151,9 +188,20 @@ namespace CoolBookLatest.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Books books = await db.Books.FindAsync(id);
-            db.Books.Remove(books);
-            await db.SaveChangesAsync();
+            //db.Books.Remove(books);
+            //await db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
+            books.IsDeleted = true;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(books).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)
