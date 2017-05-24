@@ -11,9 +11,7 @@ namespace CoolBookLatest
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Books
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,32 +19,19 @@ namespace CoolBookLatest
         {
             this.Reviews = new HashSet<Reviews>();
         }
-
-        
+    
         public int Id { get; set; }
         public string UserId { get; set; }
         public int AuthorId { get; set; }
-        [DisplayName("Genre")]
         public int GenreId { get; set; }
-        [Required(ErrorMessage = "A Title is required")]
         public string Title { get; set; }
         public string AlternativeTitle { get; set; }
         public Nullable<short> Part { get; set; }
-        [Required(ErrorMessage = "A short Description is required")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "An ISBN is required")]
         public string ISBN { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
         public Nullable<System.DateTime> PublishDate { get; set; }
-
         public string ImagePath { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
         public System.DateTime Created { get; set; }
-
         public bool IsDeleted { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }

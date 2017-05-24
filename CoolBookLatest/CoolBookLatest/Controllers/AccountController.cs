@@ -18,6 +18,8 @@ namespace CoolBookLatest.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        CoolBooksEntities db = new CoolBooksEntities();
+
         public AccountController()
         {
         }
@@ -143,16 +145,36 @@ namespace CoolBookLatest.Controllers
         }
 
         //
-        // POST: /Account/Register
+        // POST: /Account/Register______________________________________________________________________
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+          
+            model.Created = HttpContext.Timestamp;
+                
+            model.IsDeleted = false;
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber=model.PhoneNumber };
+                string createdUserId = user.Id;
+                Users tempUser = new Users();
+                tempUser.UserId = createdUserId;
+                tempUser.Email = model.Email;
+                tempUser.Phone = model.PhoneNumber;
+                tempUser.IsDeleted = model.IsDeleted;
+                tempUser.Created = model.Created;
+                tempUser.FirstName = model.FirstName;
+                tempUser.LastName = model.LastName;
                 var result = await UserManager.CreateAsync(user, model.Password);
+                db.Users.Add(tempUser);
+                db.SaveChanges();
+
+                //Write here code for adding Data into UserTable
+            
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
