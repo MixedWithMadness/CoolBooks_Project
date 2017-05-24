@@ -79,9 +79,10 @@ namespace CoolBookLatest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             Books books = await db.Books.FindAsync(id);
             
+
             if (books == null)
             {
                 return RedirectToAction("Index", "Books");
@@ -90,7 +91,10 @@ namespace CoolBookLatest.Controllers
             {
                 return RedirectToAction("Index", "Books");
             }
-            return View(books);
+
+            BookViewModel vm = books;
+
+            return View(vm);
         }
 
         // GET: Books/Create

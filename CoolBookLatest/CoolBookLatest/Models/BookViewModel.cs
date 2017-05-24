@@ -39,6 +39,8 @@ namespace CoolBookLatest.Models
         public virtual Authors Authors { get; set; }
         public virtual Genres Genres { get; set; }
 
+        public virtual ICollection<Reviews> Reviews { get; set; }
+
         public static implicit operator BookViewModel(Books books)
         {
             return new BookViewModel()

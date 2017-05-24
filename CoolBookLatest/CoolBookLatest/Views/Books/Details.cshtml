@@ -1,4 +1,4 @@
-﻿@model CoolBookLatest.Books
+﻿@model CoolBookLatest.Models.BookViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -66,7 +66,7 @@
             @Html.DisplayFor(model => model.ImagePath)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Created)
         </dt>
 
@@ -88,7 +88,7 @@
 
         <dd>
             @Html.DisplayFor(model => model.AspNetUsers.Email)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Authors.FirstName)
