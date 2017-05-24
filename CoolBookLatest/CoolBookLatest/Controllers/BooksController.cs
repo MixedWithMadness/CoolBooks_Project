@@ -33,10 +33,15 @@ namespace CoolBookLatest.Controllers
         // GET: Books
         public async Task<ActionResult> Index()
         {
-         
-
-            var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
-            return View(await books.ToListAsync());
+            if (Request.IsAuthenticated)
+            {
+                var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
+                return View(await books.ToListAsync());
+            }else
+            {
+                var books = db.Books.Include(b => b.Authors).Include(b => b.Genres).Where(b => b.IsDeleted != true);
+                return View(await books.ToListAsync());
+            }
         }
 
         // GET: Books/Details/5
@@ -46,7 +51,12 @@ namespace CoolBookLatest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             Books books = await db.Books.FindAsync(id);
+            if (!Request.IsAuthenticated && books.IsDeleted == true)
+            {
+                return HttpNotFound();
+            }
             if (books == null)
             {
                 return HttpNotFound();
@@ -177,9 +187,20 @@ namespace CoolBookLatest.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Books books = await db.Books.FindAsync(id);
-            db.Books.Remove(books);
-            await db.SaveChangesAsync();
+            //db.Books.Remove(books);
+            //await db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
+            books.IsDeleted = true;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(books).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)
