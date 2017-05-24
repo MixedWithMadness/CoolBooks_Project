@@ -12,6 +12,7 @@ namespace CoolBookLatest.Models
     public class BookViewModel
     {
         public int Id { get; set; }
+        [DisplayName("Author")]
         public int AuthorId { get; set; }
         [DisplayName("Genre")]
         public int GenreId { get; set; }
@@ -19,6 +20,7 @@ namespace CoolBookLatest.Models
         [MaxLength(255, ErrorMessage ="Please write The titel under 255 characters")]
         public string Title { get; set; }
         [MaxLength(255, ErrorMessage = "Please write The Alternative titel under 255 characters")]
+        [DisplayName("Alt. Titel")]
         public string AlternativeTitle { get; set; }
         [Range(1,99,ErrorMessage ="Please enter a number between 1 and 99")]
         public Nullable<short> Part { get; set; }
@@ -26,15 +28,18 @@ namespace CoolBookLatest.Models
         public string Description { get; set; }
         [Required(ErrorMessage = "An ISBN is required")]
         public string ISBN { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("Publised Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> PublishDate { get; set; }
 
+        [DisplayName("Image Path")]
         public string ImagePath { get; set; }
 
         public virtual Authors Authors { get; set; }
         public virtual Genres Genres { get; set; }
+
+        public virtual ICollection<Reviews> Reviews { get; set; }
 
         public static implicit operator BookViewModel(Books books)
         {

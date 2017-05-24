@@ -31,11 +31,44 @@ namespace CoolBookLatest.Controllers
             return View(await myBooks.ToListAsync());
         }
         // GET: Books
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sortOrder,int AuthorId = 0)
         {
-         
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-            var books = db.Books.Include(b => b.Authors).Include(b => b.Genres);
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", "LastName");
+            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+
+            
+            var books = from s in db.Books
+                        select s;
+
+            if (!Request.IsAuthenticated)
+            {
+                books = books.Where(b => b.IsDeleted != true);
+            }
+
+            if(AuthorId != 0)
+            {
+                books = books.Where(b => b.AuthorId == AuthorId);
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    books = books.OrderByDescending(s => s.Title);
+                    break;
+                case "Date":
+                    books = books.OrderBy(s => s.PublishDate);
+                    break;
+                case "date_desc":
+                    books = books.OrderByDescending(s => s.PublishDate);
+                    break;
+                default:
+                    books = books.OrderBy(s => s.Title);
+                    break;
+            }
+
             return View(await books.ToListAsync());
         }
 
@@ -46,12 +79,22 @@ namespace CoolBookLatest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Books books = await db.Books.FindAsync(id);
+            
+
             if (books == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Books");
             }
-            return View(books);
+            if (!Request.IsAuthenticated && books.IsDeleted == true)
+            {
+                return RedirectToAction("Index", "Books");
+            }
+
+            BookViewModel vm = books;
+
+            return View(vm);
         }
 
         // GET: Books/Create
@@ -177,9 +220,20 @@ namespace CoolBookLatest.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Books books = await db.Books.FindAsync(id);
-            db.Books.Remove(books);
-            await db.SaveChangesAsync();
+            //db.Books.Remove(books);
+            //await db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
+            books.IsDeleted = true;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(books).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)
