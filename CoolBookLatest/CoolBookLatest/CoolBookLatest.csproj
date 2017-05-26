@@ -190,9 +190,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
-    <Compile Include="Controllers\GenresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>OurDBMODEL.tt</DependentUpon>
@@ -207,7 +207,6 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BookViewModel.cs" />
-    <Compile Include="Models\GenresModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ReviewViewModel.cs" />
@@ -329,12 +328,11 @@
     <Content Include="Views\Author\Edit.cshtml" />
     <Content Include="Views\Author\Details.cshtml" />
     <Content Include="Views\Shared\_navbarPartial.cshtml" />
-    <Content Include="Views\Genres\Index.cshtml" />
-    <Content Include="Views\Genres\Create.cshtml" />
-    <Content Include="Views\Genres\Details.cshtml" />
-    <Content Include="Views\Genres\Edit.cshtml" />
-    <Content Include="Views\Genres\Delete.cshtml" />
-    <Content Include="Views\Account\EmailNotConfirmed.cshtml" />
+    <Content Include="Views\Reviews\Create.cshtml" />
+    <Content Include="Views\Reviews\Delete.cshtml" />
+    <Content Include="Views\Reviews\Details.cshtml" />
+    <Content Include="Views\Reviews\Edit.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

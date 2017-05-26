@@ -16,7 +16,7 @@ namespace CoolBookLatest.Controllers
         CoolBooksEntities db = new CoolBooksEntities();
         public async Task<ActionResult> Index()
         {
-            var authorsList = db.Authors.Where(a => a.IsDeleted== false);  // author which is not deleted
+            var authorsList =  db.Authors.Where(a => a.IsDeleted== false);  // author which is not deleted
             
             // show only authors which are not deleted
             // conflict arises with books if we really remove the author from Database
@@ -136,7 +136,7 @@ namespace CoolBookLatest.Controllers
 
         public async Task<ActionResult> Details(int?Id)
         {
-            Authors author = await db.Authors.FindAsync(Id);
+            Authors author = db.Authors.Find(Id);
 
             return View(author);
         }

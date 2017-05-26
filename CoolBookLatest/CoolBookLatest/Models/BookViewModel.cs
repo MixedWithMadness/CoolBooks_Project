@@ -56,9 +56,7 @@ namespace CoolBookLatest.Models
                 PublishDate = books.PublishDate,
                 ImagePath = books.ImagePath,
                 Authors = books.Authors,
-                Genres = books.Genres,
-                Reviews = books.Reviews
-                
+                Genres = books.Genres
             };
         }
         public Books VMToBooks(Books books)
@@ -82,10 +80,6 @@ namespace CoolBookLatest.Models
             if (Genres != null)
             {
                 books.Genres = this.Genres;
-            }
-            if(Reviews != null)
-            {
-                books.Reviews = this.Reviews;
             }
 
             return books;

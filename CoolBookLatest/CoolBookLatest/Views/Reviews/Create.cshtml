@@ -14,12 +14,11 @@
         <h4>Reviews</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
-        <div class="form-group hidden">
-            @Html.Label("BookId", "BookId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookId, "BookId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Editor("BookId", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("BookId", "", new { @class = "text-danger" })
+                @Html.DropDownList("BookId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
             </div>
         </div>
 
