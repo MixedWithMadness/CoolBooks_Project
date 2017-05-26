@@ -1,4 +1,6 @@
-﻿@model CoolBookLatest.Models.BookViewModel
+﻿@using CoolBookLatest.Models;
+
+@model CoolBookLatest.Models.BookViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -108,7 +110,11 @@
 
     </dl>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+@Html.Partial("_ReviewView", Model)
+@Html.Partial("_CreateReviewView", new ReviewViewModel())

@@ -80,7 +80,22 @@ namespace CoolBookLatest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            ViewBag.BookId = id;
+
             Books books = await db.Books.FindAsync(id);
+            books.Reviews = await db.Reviews.Where(b => b.BookId == id).ToListAsync();
+            List<AspNetUsers> Users = await db.AspNetUsers.ToListAsync(); 
+
+            if(books.Reviews != null)
+            {
+                foreach(var item in books.Reviews)
+                {
+                    item.UserId = (from s in Users
+                                  where s.Id == item.UserId
+                                  orderby s
+                                  select s.UserName).FirstOrDefault();
+                }
+            }
             
 
             if (books == null)

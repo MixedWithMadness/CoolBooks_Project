@@ -43,9 +43,9 @@ namespace CoolBookLatest.Controllers
         public ActionResult Create()
         {
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
-            ViewBag.BookId = new SelectList(db.Books, "Id", "UserId");
+            ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", "Title");
 
-            return View();
+            return PartialView();
         }
 
         // POST: Reviews/Create
@@ -66,12 +66,12 @@ namespace CoolBookLatest.Controllers
             {
                 db.Reviews.Add(reviews);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Books",null);
             }
 
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", reviews.UserId);
-            ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
-            return View(reviews);
+            //ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
+            return RedirectToAction("Index", "Books", null);
         }
 
         // GET: Reviews/Edit/5
@@ -82,6 +82,7 @@ namespace CoolBookLatest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Reviews reviews = await db.Reviews.FindAsync(id);
+
             if (reviews == null)
             {
                 return HttpNotFound();
@@ -101,10 +102,12 @@ namespace CoolBookLatest.Controllers
         {
             Reviews review = await db.Reviews.FindAsync(reviews.Id);
             review = reviews.VMToModel(review);
+
+            //review.UserId = HttpContext.User.Identity.GetUserId();
             
             if (ModelState.IsValid)
             {
-                db.Entry(reviews).State = EntityState.Modified;
+                db.Entry(review).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -147,10 +150,23 @@ namespace CoolBookLatest.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
+            //Reviews reviews = await db.Reviews.FindAsync(id);
+            //db.Reviews.Remove(reviews);
+            //await db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
             Reviews reviews = await db.Reviews.FindAsync(id);
-            db.Reviews.Remove(reviews);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            reviews.IsDeleted = true;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(reviews).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
+            return View(reviews);
         }
 
         protected override void Dispose(bool disposing)
