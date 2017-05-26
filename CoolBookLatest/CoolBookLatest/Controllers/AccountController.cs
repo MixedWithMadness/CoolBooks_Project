@@ -166,15 +166,7 @@ namespace CoolBookLatest.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-
-            var searchedUser = UserManager.FindByEmail(model.Email);
-
-            if(searchedUser!=null)
-            {
-                ModelState.AddModelError("EmailExist", "Email already exist:");
-                return Content("Email already exist:");
-            }
-
+          
             model.Created = HttpContext.Timestamp;
                 
             model.IsDeleted = false;
