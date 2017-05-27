@@ -78,10 +78,10 @@ namespace CoolBookLatest.Controllers
 
             var userId = UserManager.FindByEmail(model.Email).Id;
             
-            if(!UserManager.IsEmailConfirmed(userId))
-            {
-                return View("EmailNotConfirmed");
-            }
+            //if(!UserManager.IsEmailConfirmed(userId))
+            //{
+            //    return View("EmailNotConfirmed");
+            //}
 
             
             // This doesn't count login failures towards account lockout
