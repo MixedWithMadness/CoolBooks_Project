@@ -66,12 +66,13 @@ namespace CoolBookLatest.Controllers
             {
                 db.Reviews.Add(reviews);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Books", new { id=reviews.BookId });
             }
 
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", reviews.UserId);
-            ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
-            return View(reviews);
+            //ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
+
+            return RedirectToAction("Details", "Books", new { id = reviews.BookId });
         }
 
         // GET: Reviews/Edit/5
@@ -104,7 +105,7 @@ namespace CoolBookLatest.Controllers
             
             if (ModelState.IsValid)
             {
-                db.Entry(reviews).State = EntityState.Modified;
+                db.Entry(review).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -147,10 +148,22 @@ namespace CoolBookLatest.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Reviews reviews = await db.Reviews.FindAsync(id);
-            db.Reviews.Remove(reviews);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            //Reviews reviews = await db.Reviews.FindAsync(id);
+            //db.Reviews.Remove(reviews);
+            //await db.SaveChangesAsync();
+            //return RedirectToAction("Index");
+
+            Reviews review = await db.Reviews.FindAsync(id);
+
+            review.IsDeleted = true;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(review).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index","Books",null);
+            }
+            return RedirectToAction("Index", "Books", null);
         }
 
         protected override void Dispose(bool disposing)

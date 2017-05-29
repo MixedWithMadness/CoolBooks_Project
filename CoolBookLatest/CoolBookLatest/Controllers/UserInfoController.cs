@@ -2,7 +2,9 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,6 +16,9 @@ namespace CoolBookLatest.Controllers
 
 
         CoolBooksEntities db = new CoolBooksEntities();
+
+
+
         public ActionResult Edit()
         {
             var loggedInUser = User.Identity.GetUserId();
@@ -31,14 +36,71 @@ namespace CoolBookLatest.Controllers
             {
                 model.SelectedGender = (Enums.Gender)Enum.Parse(typeof(Enums.Gender), "Male");
             }
-       
 
-            model.SelectedGender = (Enums.Gender)Enum.Parse(typeof(Enums.Gender), user.Gender);
+            TransportUserDataTOModel(user, model);
+            //model.SelectedGender = (Enums.Gender)Enum.Parse(typeof(Enums.Gender), user.Gender);
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Edit( UserEditModel gotten)
+        {
+            
 
+            if(ModelState.IsValid)
+            {
 
+                CoolBookLatest.Users user = db.Users.Where(u => u.UserId.Equals(gotten.UserId)).FirstOrDefault();
+
+                user.FirstName = gotten.FirstName;
+                user.LastName = gotten.LastName;
+                user.Phone = gotten.Phone;
+                user.ZipCode = gotten.ZipCode;
+                user.Info = gotten.Info;
+                user.Birthdate = gotten.Birthdate;
+                //user.Picture = gotten.Picture;
+
+                user.City = gotten.City;
+                user.Country = gotten.Country;
+                user.Address = gotten.Address;
+
+                if(gotten.SelectedGender==(Enums.Gender)(Enum.Parse(typeof(Enums.Gender), "Female")))
+                {
+                    user.Gender = "1";
+                }
+                else
+                {
+                    user.Gender = "0";
+                }
+
+                CoolBookLatest.AspNetUsers aspUser = db.AspNetUsers.Where(a => a.UserName.Equals(user.Email)).FirstOrDefault();
+
+                aspUser.PhoneNumber = gotten.Phone;
+                aspUser.PhoneNumberConfirmed = false;
+                db.Entry(aspUser).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChangesAsync();
+                return RedirectToAction("Index", "Manage");
+
+            }
+            return View();
+        }
+
+        private static void TransportUserDataTOModel(CoolBookLatest.Users user, UserEditModel model)
+        {
+            model.UserId = user.UserId;
+            model.Address = user.Address;
+            model.Birthdate = user.Birthdate;
+            model.City = user.City;
+            model.FirstName = user.FirstName;
+            model.LastName = user.LastName;
+            model.Phone = user.Phone;
+            model.ZipCode = user.ZipCode;
+            model.Country = user.Country;
+            model.Info = user.Info;
+                
+            
+        }
 
     }
 
