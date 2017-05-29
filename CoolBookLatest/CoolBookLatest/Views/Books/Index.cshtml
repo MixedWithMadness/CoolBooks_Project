@@ -42,12 +42,12 @@
         <th>
             @Html.ActionLink("Publised Date", "Index", new { sortOrder = ViewBag.DateSortParm })
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.ImagePath)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Created)
-        </th>
+        </th>*@
         @*<th>
             @Html.DisplayNameFor(model => model.IsDeleted)
         </th>*@
@@ -55,11 +55,11 @@
             @Html.DisplayNameFor(model => model.AspNetUsers.Email)
         </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.Authors.FirstName)
+            @Html.DisplayName("Author")
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Genres.Name)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
@@ -83,12 +83,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.PublishDate)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ImagePath)
-        </td>
-        <td>
+        </td>*@
+        @*<td>
             @Html.DisplayFor(modelItem => item.Created)
-        </td>
+        </td>*@
         @*<td>
             @Html.DisplayFor(modelItem => item.IsDeleted)
         </td>
@@ -99,14 +99,23 @@
             @Html.DisplayFor(modelItem => item.Authors.FirstName),
             @Html.DisplayFor(modelItem => item.Authors.LastName)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Genres.Name)
-        </td>
+        </td>*@
+        @if (Request.IsAuthenticated)
+        { 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
+        }
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id })
+            </td>
+        }
     </tr>
 }
 
