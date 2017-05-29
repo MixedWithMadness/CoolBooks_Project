@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,7 @@ namespace CoolBookLatest.Models
         public string UserId { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
+        [Range(1,10,ErrorMessage ="1-10")]
         public Nullable<byte> Rating { get; set; }
         public System.DateTime Created { get; set; }
         public bool IsDeleted { get; set; }
