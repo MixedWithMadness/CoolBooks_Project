@@ -56,7 +56,9 @@ namespace CoolBookLatest.Models
                 PublishDate = books.PublishDate,
                 ImagePath = books.ImagePath,
                 Authors = books.Authors,
-                Genres = books.Genres
+                Genres = books.Genres,
+                Reviews = books.Reviews
+                
             };
         }
 
@@ -86,6 +88,10 @@ namespace CoolBookLatest.Models
             if (Genres != null)
             {
                 books.Genres = this.Genres;
+            }
+            if(Reviews != null)
+            {
+                books.Reviews = this.Reviews;
             }
 
             return books;

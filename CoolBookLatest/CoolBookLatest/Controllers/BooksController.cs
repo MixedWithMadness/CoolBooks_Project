@@ -82,6 +82,7 @@ namespace CoolBookLatest.Controllers
 
             Books books = await db.Books.FindAsync(id);
             
+            
 
             if (books == null)
             {
@@ -91,6 +92,21 @@ namespace CoolBookLatest.Controllers
             {
                 return RedirectToAction("Index", "Books");
             }
+
+            books.Reviews = await db.Reviews.Where(b => b.BookId == id).ToListAsync();
+
+            if(books.Reviews != null)
+            {
+                foreach(var item in books.Reviews)
+                {
+                    item.UserId = (from s in db.AspNetUsers
+                                  where s.Id == item.UserId
+                                  select s.UserName).FirstOrDefault();
+                                  
+                }
+            }
+            ViewBag.BookId = books.Id;
+
 
             BookViewModel vm = books;
 
