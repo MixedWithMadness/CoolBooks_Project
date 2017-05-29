@@ -18,7 +18,7 @@ namespace CoolBookLatest.Controllers
             Random rand = new Random();
             Books mainbook = new Books();
 
-            if(listofbooks.Count() == 0)
+            if(listofbooks.Count() > 0)
             {
                 mainbook = listofbooks[rand.Next(0, count)];
 
