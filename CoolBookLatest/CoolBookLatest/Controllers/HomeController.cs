@@ -8,9 +8,19 @@ namespace CoolBookLatest.Controllers
 {
     public class HomeController : Controller
     {
+        private CoolBooksEntities db = new CoolBooksEntities();
+
         public ActionResult Index()
         {
-            return View();
+            List<Books> listofbooks = db.Books.ToList();
+            int count = listofbooks.Count();
+
+            Random rand = new Random();
+            Books mainbook = new Books();
+
+            mainbook = listofbooks[rand.Next(0,count)];
+
+            return View(mainbook);
         }
 
         public ActionResult About()
