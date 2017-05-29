@@ -15,22 +15,22 @@ using System.Net.Mail;
 
 namespace CoolBookLatest
 {
-    //public class EmailService : IIdentityMessageService
-    //{
-    //    public async Task SendAsync(IdentityMessage message)
-    //    {
-            
-    //        var mailMessage = new MailMessage
-    //            ("no-replay@db24.se", message.Destination, message.Subject, message.Body);
+    public class EmailService : IIdentityMessageService
+    {
+        public async Task SendAsync(IdentityMessage message)
+        {
 
-    //        mailMessage.IsBodyHtml = true;
+            var mailMessage = new MailMessage
+                ("www.lexicon.se@gmail.com", message.Destination, message.Subject, message.Body);
 
-    //        using (var client = new SmtpClient())
-    //        {
-    //            await client.SendMailAsync(mailMessage);
-    //        }
-    //    }
-    //}
+            mailMessage.IsBodyHtml = true;
+
+            using (var client = new SmtpClient())
+            {
+                await client.SendMailAsync(mailMessage);
+            }
+        }
+    }
 
     //public class SmsService : IIdentityMessageService
     //{
