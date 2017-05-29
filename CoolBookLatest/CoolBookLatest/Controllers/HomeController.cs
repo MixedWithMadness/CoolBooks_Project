@@ -18,9 +18,17 @@ namespace CoolBookLatest.Controllers
             Random rand = new Random();
             Books mainbook = new Books();
 
-            mainbook = listofbooks[rand.Next(0,count)];
+            if(listofbooks != null)
+            {
+                mainbook = listofbooks[rand.Next(0, count)];
 
-            return View(mainbook);
+                return View(mainbook);
+            }
+            else
+            {
+                return View();
+            }
+            
         }
 
         public ActionResult About()
