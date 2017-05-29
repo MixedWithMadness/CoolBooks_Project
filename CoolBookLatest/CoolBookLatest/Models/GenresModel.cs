@@ -9,11 +9,13 @@ namespace CoolBookLatest.Models
     public class GenresModel
     {
         public int Id { get; set; }
+        [Required]
+        [MinLength(3)]
         public string Name { get; set; }
-        public string Description { get; set; }
 
-        public string ShortDate { get; set; }
-           
+        [Required][MinLength(10)]
+        public string Description { get; set; }
+   
 
         [Required]
         [DataType(DataType.Date)]

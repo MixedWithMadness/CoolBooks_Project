@@ -59,6 +59,12 @@ namespace CoolBookLatest.Models
                 Genres = books.Genres
             };
         }
+
+        public void UPloadBookPicture(HttpPostedFileBase fileUpload)
+        {
+           // fileUpload.FileName;
+        }
+
         public Books VMToBooks(Books books)
         {
             
