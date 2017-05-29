@@ -1,12 +1,14 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    padding-bottom: 0px;   
 }
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -16,9 +18,293 @@
     white-space: normal;
 }
 
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+h1, h2, h3, h4, h5 {
+    
+  font-family: 'Baloo Bhaina', cursive;
+
+}
+
+
+/*
+nav .navbar-brand {
+  font-size: 30px;
+}
+nav .navbar-toggle {
+  margin: 13px 15px 13px 0;
+}
+nav a {
+  font-size: 18px;
+  padding-bottom: 20px !important;
+  padding-top: 20px !important;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+nav.navbar.shrink {
+  min-height: 35px;
+}
+nav.navbar.shrink .navbar-brand {
+  font-size: 25px;
+}
+nav.navbar.shrink a {
+  font-size: 15px;
+  padding-bottom: 10px !important;
+  padding-top: 10px !important;
+}
+nav.navbar.shrink .navbar-toggle {
+  margin: 8px 15px 8px 0;
+  padding: 4px 5px;
+}
+*/
+
+
+nav a {
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  font-size: 18px;
+}
+
+nav .navbar-toggle {
+  margin: 13px 15px 13px 0;
+}
+
+.navbar-brand {
+  font-size: 30px;
+}
+
+
+
+nav.navbar.shrink {
+  min-height: 35px;
+}
+
+nav.shrink a {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  font-size: 15px;
+}
+
+nav.shrink .navbar-brand {
+  font-size: 25px;
+}
+
+nav.shrink .navbar-toggle {
+  padding: 4px 5px;
+  margin: 8px 15px 8px 0;
+}
+
+
+
+
+
+
+
+.carousel-control.right, .carousel-control.left {
+    /*background-image: none;*/
+    
+    color: #fff;
+    opacity: 1;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .75);
+}
+
+
+.carousel-control.left {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .15) 0%, rgba(0, 0, 0, .0001) 100%);
+}
+
+
+.carousel-control.right {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0, .15) 100%);
+}
+
+
+
+
+.carousel-indicators li {
+      border-color: #fff;
+  }
+
+.carousel-indicators li.active {
+      background-color: #fff;
+  }
+
+
+
+
+
+.carousel-indicators > li,
+.carousel-indicators > li.active{
+    width: 20px;
+    height: 10px;
+    border-radius: 0;
+    border: solid 0px white;
+    background: #999;
+    text-indent: 0;
+}
+.carousel-indicators > li.active {
+    background: white;
+    border: solid 0px white;
+}
+
+
+
+
+.carousel-caption {
+    bottom: 40%;
+    padding-bottom: 0px;
+}
+
+
+
+
+
+
+
+
+.low-brightness {
+    filter: brightness(50%);
+}
+
+
+
+
+.slideanim {visibility:hidden;}
+.slidex {
+    /* The name of the animation */
+    animation-name: slidex;
+    -webkit-animation-name: slidex; 
+    /* The duration of the animation */
+    animation-duration: 1s; 
+    -webkit-animation-duration: 1s;
+    /* Make the element visible */
+    visibility: visible; 
+}
+
+/* Go from 0% to 100% opacity (see-through) and specify the percentage from when to slide in the element along the Y-axis */
+@keyframes slidex {
+    0% {
+        opacity: 0;
+        transform: translateY(10%);
+    } 
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    } 
+}
+@-webkit-keyframes slidex {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateY(10%);
+    } 
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(0%);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+-webkit-transition-timing-function: ease;
+       -o-transition-timing-function: ease;
+          transition-timing-function: ease;
+  -webkit-transition-duration: .35s;
+       -o-transition-duration: .35s;
+          transition-duration: .35s;
+  -webkit-transition-property: height, visibility;
+       -o-transition-property: height, visibility;
+          transition-property: height, visibility;
+*/
+
+/* .navbar-nav: hover {
+    width: 300px;
+}*/
+
+
+.index-1-bild {
+    padding-top:00px;
+    padding-bottom:20px;
+}
+
+
+.index-top-focus-bg {
+    background-color: #909090;
+    color: #ffffff;
+}
+
+
+.index-6-bilder {
+     margin-top:10px;
+}
+
+
+
+
+.panel {
+    border: 0px solid #ccc;
+    border-radius:0;
+    box-shadow: 0 1px 3px #999;
+    transition: box-shadow 0.3s;
+    transition-timing-function: ease-out;
+    
+    
+}
+
+.panel:hover {
+    box-shadow: 0px 1px 20px rgba(0,0,0, .2);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer1 {
+    margin-top:50px;
+    background-color: #333;   
+    color:#EEE;
+    padding-top:50px;
+    padding-bottom:50px;
+    line-height: 2em;
+    box-shadow: 0 -5px 5px;
+    
+}
+
+.copyright-bottom {
+    margin-top:0px;
+    background-color: #000;   
+    color:#999;
+    padding:10px;
+        
 }
