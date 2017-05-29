@@ -242,6 +242,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bookcover.jpg" />
+    <Content Include="Images\carousel_img_0b.jpg" />
+    <Content Include="Images\carousel_img_1b.jpg" />
+    <Content Include="Images\carousel_img_2b.jpg" />
+    <Content Include="Images\carousel_img_3b.jpg" />
+    <Content Include="Images\carousel_img_4b.jpg" />
+    <Content Include="Images\carousel_img_5b.jpg" />
+    <Content Include="Images\coolbooks_logo.png" />
     <Content Include="OurDBMODEL.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>OurDBMODEL.edmx</DependentUpon>
@@ -272,6 +280,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
