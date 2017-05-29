@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CoolBookLatest.Models;
+using System.Data.Entity.Validation;
 
 namespace CoolBookLatest.Controllers
 {
@@ -17,6 +18,8 @@ namespace CoolBookLatest.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        CoolBooksEntities db = new CoolBooksEntities();
 
         public AccountController()
         {
@@ -73,13 +76,27 @@ namespace CoolBookLatest.Controllers
                 return View(model);
             }
 
+            var userId = UserManager.FindByEmail(model.Email).Id;
+            
+            //if(!UserManager.IsEmailConfirmed(userId))
+            //{
+            //    return View("EmailNotConfirmed");
+            //}
+
+            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+        
+
             switch (result)
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
+
+                 
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -143,25 +160,73 @@ namespace CoolBookLatest.Controllers
         }
 
         //
-        // POST: /Account/Register
+        // POST: /Account/Register______________________________________________________________________
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+            var searchedUser = UserManager.FindByEmail(model.Email);
+
+            if(searchedUser!=null)
+            {
+                ModelState.AddModelError("EmailExist", "Email already exist:");
+                return Content("Email already exist:");
+            }
+
+            model.Created = HttpContext.Timestamp;
+                
+            model.IsDeleted = false;
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber=model.PhoneNumber };
+                string createdUserId = user.Id;
+                Users tempUser = new Users();
+                tempUser.UserId = createdUserId;
+                tempUser.Email = model.Email;
+                tempUser.Phone = model.PhoneNumber;
+                tempUser.IsDeleted = model.IsDeleted;
+                tempUser.Created = model.Created;
+                tempUser.FirstName = model.FirstName;
+                tempUser.LastName = model.LastName;
+                tempUser.Country = model.listOfCountries.ToString();
+                tempUser.ZipCode = model.ZipCode;
+                tempUser.Address = model.Address;
+                tempUser.City = model.City;
+                tempUser.Birthdate = model.DateOfBirth;
+
+
+
+                //tempUser.Gender = model.selectedGener.ToString();
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                if(model.selectedGener.ToString()=="Male")
+                {
+                    tempUser.Gender = "1";
+                }
+                else
+                {
+                    tempUser.Gender = "0";
+                }
+
+                db.Users.Add(tempUser);
+
+                db.SaveChanges();
+               
+                //Write here code for adding Data into UserTable
+
+
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -183,6 +248,11 @@ namespace CoolBookLatest.Controllers
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        public async Task<ActionResult> EmailNotConfirmed()
+        {
+            return View();
         }
 
         //
@@ -209,12 +279,12 @@ namespace CoolBookLatest.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                //For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                //Send an email with this link
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -236,7 +306,7 @@ namespace CoolBookLatest.Controllers
         {
             return code == null ? View("Error") : View();
         }
-
+        // 1221
         //
         // POST: /Account/ResetPassword
         [HttpPost]

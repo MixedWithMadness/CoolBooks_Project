@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using CoolBookLatest.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoolBookLatest.Models
@@ -70,6 +72,68 @@ namespace CoolBookLatest.Models
         public string Email { get; set; }
 
         [Required]
+        [MinLength(3)]
+        [MaxLength(45)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+
+        [Required]
+        [MinLength(3)]
+        [MaxLength(45)]
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+
+        [Display(Name = "Country")]
+        public  Countries listOfCountries {get; set;}
+
+
+        [Display(Name = "Gender")]
+        public Gender selectedGener { get; set; }
+
+        
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date Of Birth")]
+        public DateTime DateOfBirth { get; set; }
+
+
+        [Required]
+        [MinLength(3)]
+        [MaxLength(45)]
+        [Display(Name = "Address")]
+        public String Address { get; set; }
+
+        
+        [MaxLength(15)]
+        [Display(Name = "Zip Code")]
+        public string ZipCode { get; set; }
+
+        [Required]
+
+        [Display(Name = "Created")]
+        public DateTime Created { get; set; }
+
+        [Required]
+
+        [Display(Name = "IsDeleted")]
+        public bool IsDeleted { get; set; }
+
+        [MaxLength(35)]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+       
+       
+        [Display(Name = "Phone Number")]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Enter a valid phone number")]
+        public string PhoneNumber { get; set; }
+
+
+        [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -79,6 +143,7 @@ namespace CoolBookLatest.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
     }
 
     public class ResetPasswordViewModel

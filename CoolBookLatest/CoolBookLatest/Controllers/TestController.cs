@@ -6,24 +6,19 @@ using System.Web.Mvc;
 
 namespace CoolBookLatest.Controllers
 {
-    public class HomeController : Controller
+    public class TestController : Controller
     {
+        // GET: Test
         public ActionResult Index()
         {
+            
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult CreateBook()
         {
-            ViewBag.Message = "Coolbooks - The modern review system.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
+            CoolBooksEntities ctx = new CoolBooksEntities();
+            var model = new Books();
             return View();
         }
     }
