@@ -1,23 +1,43 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+
+
     <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        
         <li>@Html.ActionLink("About", "About", "Home")</li>
         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-        <li>@Html.ActionLink("Books", "Index", "Books")</li>
-        <li>@Html.ActionLink("My Books", "MyBooks", "Books")</li>
-        <li>@Html.ActionLink("Authors","Index","Author")</li>
-        <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
-        <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+               aria-expanded="false">Books<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">@Html.ActionLink("All Books", "Index", "Books")</a></li>
+                <li><a href="#">@Html.ActionLink("My Books", "MyBooks", "Books")</a></li>
+                <li><a href="#">@Html.ActionLink("Authors", "Index", "Author")</a></li>
+                <li><a href="#">@Html.ActionLink("Reviews", "Index", "Reviews")</a></li>
+                <li><a href="#">@Html.ActionLink("Genres", "Index", "Genres")</a></li>
+            </ul>
+        </li>
     </ul>
-}
-else
-{
-    <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("About", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-        <li>@Html.ActionLink("Books", "Index", "Books")</li>
-    </ul>
-}
+
+            @*<ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                <li>@Html.ActionLink("My Books", "MyBooks", "Books")</li>
+                <li>@Html.ActionLink("Authors","Index","Author")</li>
+                <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
+                <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+            </ul>*@
+
+
+        }
+        else
+        {
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Books", "Index", "Books")</li>
+            </ul>
+        }
