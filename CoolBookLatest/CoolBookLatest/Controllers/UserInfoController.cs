@@ -38,6 +38,7 @@ namespace CoolBookLatest.Controllers
             }
 
             TransportUserDataTOModel(user, model);
+            //string test = model.Country.
             //model.SelectedGender = (Enums.Gender)Enum.Parse(typeof(Enums.Gender), user.Gender);
             return View(model);
         }
@@ -49,9 +50,11 @@ namespace CoolBookLatest.Controllers
 
             if(ModelState.IsValid)
             {
-
+                
                 CoolBookLatest.Users user = db.Users.Where(u => u.UserId.Equals(gotten.UserId)).FirstOrDefault();
 
+                user.Country = gotten.Country.ToString();
+                   // gotten.Country.ToString();
                 user.FirstName = gotten.FirstName;
                 user.LastName = gotten.LastName;
                 user.Phone = gotten.Phone;
@@ -61,7 +64,8 @@ namespace CoolBookLatest.Controllers
                 //user.Picture = gotten.Picture;
 
                 user.City = gotten.City;
-                user.Country = gotten.Country;
+               
+               
                 user.Address = gotten.Address;
 
                 if(gotten.SelectedGender==(Enums.Gender)(Enum.Parse(typeof(Enums.Gender), "Female")))
@@ -95,8 +99,10 @@ namespace CoolBookLatest.Controllers
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;
             model.Phone = user.Phone;
+           
             model.ZipCode = user.ZipCode;
-            model.Country = user.Country;
+
+            model.Country = (Enums.Countries)(Enum.Parse(typeof(Enums.Countries), user.Country));
             model.Info = user.Info;
                 
             
