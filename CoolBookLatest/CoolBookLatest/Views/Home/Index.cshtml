@@ -1,4 +1,4 @@
-﻿@model CoolBookLatest.Books
+﻿@model List<Books>
 
 @{
     ViewBag.Title = "Home Page";
@@ -105,13 +105,16 @@
 
 @if (Model != null)
 {
-<div>
-    <h1>
-        @Html.DisplayTextFor(model => model.Title)
-    </h1>
-    <p> @Html.DisplayTextFor(model => model.Authors.FirstName), @Html.DisplayTextFor(model => model.Authors.LastName) </p>
-    <p> @Html.DisplayTextFor(model => model.Description)</p>
-</div>
+    foreach (var item in Model)
+    {
+        <div>
+            <h1>
+                @Html.DisplayTextFor(modelItem => item.Title)
+            </h1>
+            <p> @Html.DisplayTextFor(modelItem => item.Authors.FirstName), @Html.DisplayTextFor(model => item.Authors.LastName) </p>
+            <p> @Html.DisplayTextFor(modelItem => item.Description)</p>
+        </div>
+    }
 }
 
 <div class="row">
