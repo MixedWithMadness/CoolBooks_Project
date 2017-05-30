@@ -30,9 +30,13 @@ namespace CoolBookLatest.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Create (GenresModel model)
         {
             Genres gen = new Genres();
+
+            model.IsDeleted = false;
+            model.Created = HttpContext.Timestamp;
 
             if (ModelState.IsValid)
             {
@@ -73,7 +77,7 @@ namespace CoolBookLatest.Controllers
             }
             
         }
-
+        [Authorize]
         public async Task<ActionResult> Edit(int? Id)
         {
             if(Id!=null)
@@ -96,6 +100,7 @@ namespace CoolBookLatest.Controllers
             
         }
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Edit (Genres gotten)
         {
             if(ModelState.IsValid)
@@ -114,6 +119,7 @@ namespace CoolBookLatest.Controllers
         }
 
 
+        [Authorize]
         public async Task<ActionResult> Delete (int? Id)
         {
             if(Id!=null)
@@ -129,6 +135,7 @@ namespace CoolBookLatest.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Delete(int Id)
         {
             if(Id!=null)
