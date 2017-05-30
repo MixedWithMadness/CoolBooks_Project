@@ -30,6 +30,7 @@ namespace CoolBookLatest
                       "~/Content/site.css",
                       "~/Content/site2.css",
                       "~/Content/font-awesome.min.css",
+                      "~/Content/bootstrapValidator.css",
                       "~/Scripts/site.js"
                       ));
             
