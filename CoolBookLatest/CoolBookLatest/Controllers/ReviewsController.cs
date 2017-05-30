@@ -71,7 +71,8 @@ namespace CoolBookLatest.Controllers
 
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", reviews.UserId);
             //ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
-            return RedirectToAction("Index","Books",null);
+
+            return RedirectToAction("Details", "Books", new { id = reviews.BookId });
         }
 
         // GET: Reviews/Edit/5

@@ -8,13 +8,20 @@ namespace CoolBookLatest.Models
 {
     public class ReviewViewModel
     {
+        
         public int Id { get; set; }
+        
         public int BookId { get; set; }
+        
         public string UserId { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Text { get; set; }
+        [Required]
         [Range(1,10,ErrorMessage ="1-10")]
         public Nullable<byte> Rating { get; set; }
+        
         public System.DateTime Created { get; set; }
         public bool IsDeleted { get; set; }
 

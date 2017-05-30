@@ -34,6 +34,7 @@ namespace CoolBookLatest.Controllers
         public async Task<ActionResult> Create (Authors gotten) // ModelBinder may also treat data returned with a form as a Author
         {
             gotten.Created = DateTime.Now;
+            gotten.IsDeleted = false;
 
             if (ModelState.IsValid)
             {

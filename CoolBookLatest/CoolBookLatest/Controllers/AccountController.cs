@@ -181,9 +181,12 @@ namespace CoolBookLatest.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber=model.PhoneNumber };
-                string createdUserId = user.Id;
+                var aspUser = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber=model.PhoneNumber };
+
                 Users tempUser = new Users();
+
+                string createdUserId = aspUser.Id;
+
                 tempUser.UserId = createdUserId;
                 tempUser.Email = model.Email;
                 tempUser.Phone = model.PhoneNumber;
@@ -200,7 +203,7 @@ namespace CoolBookLatest.Controllers
 
 
                 //tempUser.Gender = model.selectedGener.ToString();
-                var result = await UserManager.CreateAsync(user, model.Password);
+               
 
                 if(model.selectedGener.ToString()=="Male")
                 {
@@ -211,25 +214,30 @@ namespace CoolBookLatest.Controllers
                     tempUser.Gender = "0";
                 }
 
-                db.Users.Add(tempUser);
+                var result = await UserManager.CreateAsync(aspUser, model.Password);
+               
 
-                db.SaveChanges();
+               
                
                 //Write here code for adding Data into UserTable
 
 
                 if (result.Succeeded)
                 {
+                    db.Users.Add(tempUser);
+
+                    db.SaveChanges();
+
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(aspUser.Id);
+                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = aspUser.Id, code = code }, protocol: Request.Url.Scheme);
                     
 
                     GMailer mailer = new GMailer();
-                    mailer.ToEmail = user.Email;
+                    mailer.ToEmail = aspUser.Email;
                     mailer.Subject = "Confirm your account";
                     mailer.Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
                     mailer.IsHtml = true;
@@ -281,7 +289,7 @@ namespace CoolBookLatest.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)  // removed from condition here "|| !(await UserManager.IsEmailConfirmedAsync(user.Id))"
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
