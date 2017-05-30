@@ -14,12 +14,13 @@ namespace CoolBookLatest.Models
         public int BookId { get; set; }
         
         public string UserId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter a Title")]
+        [MinLength(4)]
         public string Title { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Please enter a summary")]
         public string Text { get; set; }
         [Required]
-        [Range(1,10,ErrorMessage ="1-10")]
+        [Range(1,10,ErrorMessage ="Plese enter 1-10")]
         public Nullable<byte> Rating { get; set; }
         
         public System.DateTime Created { get; set; }
