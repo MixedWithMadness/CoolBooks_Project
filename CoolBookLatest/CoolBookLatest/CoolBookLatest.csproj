@@ -253,7 +253,15 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrapValidator.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\site2.css" />
+    <Content Include="Content\T42H8QNKW-U41ST0VDW-881209bfd0fa-512.jpg" />
+    <Content Include="Content\T42H8QNKW-U42LRRJQM-a1178a200eb1-512.jpg" />
+    <Content Include="Content\T42H8QNKW-U438KRVC6-982b06347502-512.jpg" />
+    <Content Include="Content\T42H8QNKW-U4395V0AK-805d34b2cfa3-512.jpg" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -284,7 +292,14 @@
     <Content Include="OurDBMODEL.edmx.diagram">
       <DependentUpon>OurDBMODEL.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrapValidator.js" />
+    <Content Include="Scripts\contact.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

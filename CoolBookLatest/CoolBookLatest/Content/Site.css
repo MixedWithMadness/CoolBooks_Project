@@ -1,14 +1,21 @@
-﻿body {
-    padding-top: 50px;
+﻿@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaina|Montserrat');
+
+body {
+    padding-top: 0px;
     font-family: 'Montserrat', sans-serif;
     padding-bottom: 0px;   
 }
 
+/*@media (min-width: 768px) and (max-width: 1000px) {
+   .collapse {
+       display: none !important;
+   }
+}*/
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -209,20 +216,6 @@ nav.shrink .navbar-toggle {
         -webkit-transform: translateY(0%);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*

@@ -21,11 +21,16 @@ namespace CoolBookLatest
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/bootstrapValidator.js",
+                      "~/Scripts/respond.js",
+                      "~/Scripts/contact.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
+                      "~/Content/site2.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/bootstrapValidator.css",
                       "~/Scripts/site.js"
                       ));
             
