@@ -1,44 +1,137 @@
-﻿@model CoolBookLatest.Books
+﻿@model List<Books>
 
 @{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET Test</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+
+
+<!-- Carousel -->
+<h1>Några recensioner</h1>
+<div id="myCarousel" class="carousel slide text-center" data-ride="carousel" data-interval="10000">
+
+    <!-- Carousel Navigation Indicators -->
+    <ol class="carousel-indicators" ->
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+    </ol>
+
+    <!-- Carousel Wrappers -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="/Images/carousel_img_0b.jpg" class="img-responsive low-brightness">
+            <div class="carousel-caption">
+                <h1>Lorem ipsum dolor sit amet</h1>
+                <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt </p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="/Images/carousel_img_1b.jpg" class="img-responsive low-brightness">
+            <div class="carousel-caption">
+                <h1>Ut labore et dolore</h1>
+                <p>Magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="/Images/carousel_img_2b.jpg" class="img-responsive low-brightness">
+            <div class="carousel-caption">
+                <h1>Quis nostrud exercitation</h1>
+                <p>Ullamco laboris nisi ut aliquip ex ea commodo</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="/Images/carousel_img_3b.jpg" class="img-responsive low-brightness">
+            <div class="carousel-caption">
+                <h1>Consequat. Duis aute irure dolor </h1>
+                <p>In reprehenderit in voluptate velit esse cillum dolore</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="/Images/carousel_img_4b.jpg" class="img-responsive low-brightness">
+            <div class="carousel-caption">
+                <h1>Eu fugiat nulla pariatur</h1>
+                <p>Excepteur sint occaecat cupidatat non proident sunt </p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img src="/Images/carousel_img_5b.jpg" class="img-responsive low-brightness">
+            <div class="carousel-caption">
+                <h1>In culpa qui officia </h1>
+                <p>Deserunt mollit anim id est laborum</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation, left and right arrow -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+
 </div>
 
-@if (Model != null)
-{
-<div>
-    <h1>
-        @Html.DisplayTextFor(model => model.Title)
-    </h1>
-    <p> @Html.DisplayTextFor(model => model.Authors.FirstName), @Html.DisplayTextFor(model => model.Authors.LastName) </p>
-    <p> @Html.DisplayTextFor(model => model.Description)</p>
-</div>
-}
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started now!</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+
+
+<!-- 1 bild, med description -->
+
+<h1>Framslumpad bok</h1>
+
+<div class="container">
+    <div class="jumbotron">
+            <a href="#"><img src="/Images/bookcover.jpg" style=""></a>
+       
+            <h1>Just nu är jag här</h1>
+            <p> Isabelle Ståhl</p>
+            <p>Elise läser på universitetet och dejtar på Tinder.</p>
+        
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+</div>
+
+
+
+
+<!-- 6 bilder, med description -->
+
+<div class="index-6-bilder">
+    <h1>Senast skapade böcker</h1>
+
+    <!-- 6 bilder: 1 bild, med description -->
+    @foreach (var item in Model)
+    {
+        <div class="col-xs-12 col-sm-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @if (item.ImagePath != null)
+                    {
+                        <img src="@item.ImagePath" class="img-responsive">
+                    }
+                    else
+                    {
+                        <img src="/Images/bookcover.jpg" class="img-responsive">
+                    }
+                </div>
+                <div class="panel-footer">
+                    <h3> @Html.DisplayTextFor(modelItem => item.Title) </h3>
+                    <p> @Html.DisplayTextFor(modelItem => item.Authors.FirstName), @Html.DisplayTextFor(model => item.Authors.LastName)</p>
+                    <p> @Html.DisplayTextFor(modelItem => item.Description)</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>

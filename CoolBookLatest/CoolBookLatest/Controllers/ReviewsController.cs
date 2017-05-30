@@ -66,13 +66,43 @@ namespace CoolBookLatest.Controllers
             {
                 db.Reviews.Add(reviews);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details", "Books", new { id=reviews.BookId });
+                return RedirectToAction("Details", "Books", new { id=reviews.BookId, success = true });
             }
 
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", reviews.UserId);
             //ViewBag.BookId = new SelectList(db.Books, "Id", "UserId", reviews.BookId);
+            string error = "";
+            if(review.Text == null)
+            {
+                error += "Please enter a text. ";
+            }
+            else if(review.Text.Count() < 5)
+            {
+                error += "Text too short. ";
+            }
 
-            return RedirectToAction("Details", "Books", new { id = reviews.BookId });
+            if (review.Rating == null)
+            {
+                error += "Please enter a Rating. ";
+            }
+            else
+            if (review.Rating >= 10 && reviews.Rating <= 1)
+            {
+                error += "Enter a rating between 1-10. ";
+            }
+
+            if (review.Title == null)
+            {
+                error += "Please enter a Title. ";
+            }
+            else
+            if (review.Title.Count() < 5)
+            {
+                error += "Title too short. ";
+            }
+
+
+            return RedirectToAction("Details", "Books", new { id = reviews.BookId, errorMsg = error });
         }
 
         // GET: Reviews/Edit/5

@@ -6,12 +6,6 @@ body {
     padding-bottom: 0px;   
 }
 
-/*@media (min-width: 768px) and (max-width: 1000px) {
-   .collapse {
-       display: none !important;
-   }
-}*/
-
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -39,79 +33,6 @@ h1, h2, h3, h4, h5 {
   font-family: 'Baloo Bhaina', cursive;
 
 }
-
-
-/*
-nav .navbar-brand {
-  font-size: 30px;
-}
-nav .navbar-toggle {
-  margin: 13px 15px 13px 0;
-}
-nav a {
-  font-size: 18px;
-  padding-bottom: 20px !important;
-  padding-top: 20px !important;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-nav.navbar.shrink {
-  min-height: 35px;
-}
-nav.navbar.shrink .navbar-brand {
-  font-size: 25px;
-}
-nav.navbar.shrink a {
-  font-size: 15px;
-  padding-bottom: 10px !important;
-  padding-top: 10px !important;
-}
-nav.navbar.shrink .navbar-toggle {
-  margin: 8px 15px 8px 0;
-  padding: 4px 5px;
-}
-*/
-
-
-nav a {
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
-  font-size: 18px;
-}
-
-nav .navbar-toggle {
-  margin: 13px 15px 13px 0;
-}
-
-.navbar-brand {
-  font-size: 30px;
-}
-
-
-
-nav.navbar.shrink {
-  min-height: 35px;
-}
-
-nav.shrink a {
-  padding-top: 10px !important;
-  padding-bottom: 10px !important;
-  font-size: 15px;
-}
-
-nav.shrink .navbar-brand {
-  font-size: 25px;
-}
-
-nav.shrink .navbar-toggle {
-  padding: 4px 5px;
-  margin: 8px 15px 8px 0;
-}
-
-
-
-
-
 
 
 .carousel-control.right, .carousel-control.left {
@@ -218,21 +139,6 @@ nav.shrink .navbar-toggle {
 }
 
 
-/*
--webkit-transition-timing-function: ease;
-       -o-transition-timing-function: ease;
-          transition-timing-function: ease;
-  -webkit-transition-duration: .35s;
-       -o-transition-duration: .35s;
-          transition-duration: .35s;
-  -webkit-transition-property: height, visibility;
-       -o-transition-property: height, visibility;
-          transition-property: height, visibility;
-*/
-
-/* .navbar-nav: hover {
-    width: 300px;
-}*/
 
 
 .index-1-bild {
@@ -273,16 +179,6 @@ nav.shrink .navbar-toggle {
 
 
 
-
-
-
-
-
-
-
-
-
-
 .footer1 {
     margin-top:50px;
     background-color: #333;   
@@ -301,4 +197,3 @@ nav.shrink .navbar-toggle {
     padding:10px;
         
 }
-/* */

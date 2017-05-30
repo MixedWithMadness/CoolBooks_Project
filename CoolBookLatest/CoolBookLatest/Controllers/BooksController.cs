@@ -73,7 +73,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // GET: Books/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int? id, string errorMsg = null)
         {
             if (id == null)
             {
@@ -106,7 +106,7 @@ namespace CoolBookLatest.Controllers
                 }
             }
             ViewBag.BookId = books.Id;
-
+            ViewBag.errorMsg = errorMsg;
 
             BookViewModel vm = books;
 

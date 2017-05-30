@@ -312,6 +312,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\validation.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Roles\Create.cshtml" />
     <Content Include="Web.config" />

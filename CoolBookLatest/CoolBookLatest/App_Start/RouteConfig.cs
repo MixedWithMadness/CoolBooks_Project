@@ -13,6 +13,12 @@ namespace CoolBookLatest
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Details",
+            //    url: "Books/Details/{id}{errorMsg}",
+            //    defaults: new { controller = "Books", action = "Details", id = UrlParameter.Optional, errorMsg = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
