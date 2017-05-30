@@ -170,13 +170,37 @@ h1, h2, h3, h4, h5 {
     
 }
 
+
+
 .panel:hover {
     box-shadow: 0px 1px 20px rgba(0,0,0, .2);
 }
 
 
+.panel a:link {
+    color: #333;
+    text-decoration:none
+    
+}
+
+.panel a:hover {
+    color: #333;
+    text-decoration:none
+    
+}
 
 
+.jumbotron a:link {
+    color: #333;
+    text-decoration:none
+    
+}
+
+.jumbotron a:hover {
+    color: #333;
+    text-decoration:none
+    
+}
 
 
 .footer1 {
