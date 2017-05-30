@@ -1,4 +1,5 @@
-﻿@model List<Books>
+﻿@using CoolBookLatest.Enums;
+@model List<Books>
 
 @{
     ViewBag.Title = "Home Page";
@@ -65,12 +66,19 @@
 <a class="" href="@Url.Action("Details","Books", new { id = Model[0].Id})">
     <div class="container">
         <div class="jumbotron">
-            <img src="/Images/bookcover.jpg" style="">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <img src="/Images/bookcover.jpg" style="">
+                </div>
 
-            <h1>Just nu är jag här</h1>
-            <p> Isabelle Ståhl</p>
-            <p>Elise läser på universitetet och dejtar på Tinder.</p>
-
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                    <h1>Title - <span style="font-size:80%;">@Html.DisplayTextFor(modelItem => Model[0].Title)</span> </h1>
+                    <p>Description - @Html.DisplayTextFor(modelItem => Model[0].Description)</p>
+                    <p>Author - @Html.DisplayTextFor(modelItem => Model[0].Authors.FirstName) @Html.DisplayTextFor(modelItem => Model[0].Authors.LastName)</p>
+                    <p>Genre - @Html.DisplayTextFor(modelItem => Model[0].Genres.Name) </p>
+                    <p>Publised - @Html.DisplayFor(modelItem => Model[0].PublishDate) </p>
+                </div>
+            </div>
         </div>
     </div>
 </a>
@@ -92,15 +100,11 @@
                         <div class="panel-body">
                             @if (item.ImagePath != null)
                             {
-
                                 <img src="@item.ImagePath" class="img-responsive">
-
                             }
                             else
                             {
-
                                 <img src="/Images/bookcover.jpg" class="img-responsive">
-
                             }
                         </div>
                         <div class="panel-footer">
