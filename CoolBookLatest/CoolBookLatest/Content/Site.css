@@ -166,40 +166,21 @@ h1, h2, h3, h4, h5 {
     box-shadow: 0 1px 3px #999;
     transition: box-shadow 0.3s;
     transition-timing-function: ease-out;
-    
+    color: #333;
+    text-decoration:none;
     
 }
-
 
 
 .panel:hover {
     box-shadow: 0px 1px 20px rgba(0,0,0, .2);
+    color: #333;
+    text-decoration:none;
 }
 
-
-.panel a:link {
+.jumbotron h1, p, a, a:hover {
     color: #333;
-    text-decoration:none
-    
-}
-
-.panel a:hover {
-    color: #333;
-    text-decoration:none
-    
-}
-
-
-#jumbotron a:link {
-    color: #333;
-    text-decoration:none
-    
-}
-
-#jumbotron a:hover {
-    color: #333;
-    text-decoration:none
-    
+    text-decoration:none;
 }
 
 
