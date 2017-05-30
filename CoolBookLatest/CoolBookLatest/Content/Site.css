@@ -88,6 +88,7 @@ h1, h2, h3, h4, h5 {
 .carousel-caption {
     bottom: 40%;
     padding-bottom: 0px;
+    color: #fff;
 }
 
 
@@ -178,11 +179,10 @@ h1, h2, h3, h4, h5 {
     text-decoration:none;
 }
 
-.jumbotron h1, p, a, a:hover {
+.jumbotron, .jumbotron a:link, .jumbotron a:hover {
     color: #333;
     text-decoration:none;
 }
-
 
 .footer1 {
     margin-top:50px;
