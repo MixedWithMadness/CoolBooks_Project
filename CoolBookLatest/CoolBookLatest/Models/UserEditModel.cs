@@ -51,7 +51,7 @@ namespace CoolBookLatest.Models
         public string City { get; set; }
         [StringLength(45, MinimumLength = 2)]
         [RegularExpression("([a-zöåäÖÅÄ]*)", ErrorMessage = "Only Swedish and English alphabets are expected")]
-        public string Country { get; set; }
+        public Enums.Countries Country { get; set; }
        // public string Email { get; set; }
         public string Info { get; set; }
     }
