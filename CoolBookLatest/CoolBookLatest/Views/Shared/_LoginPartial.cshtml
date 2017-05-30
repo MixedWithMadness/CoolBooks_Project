@@ -14,11 +14,28 @@
                    aria-expanded="false">User <span class="glyphicon glyphicon-chevron-down"></span></a>
                 <ul class="dropdown-menu">
 
+                    @*Test not working*@
+                    @*<li>
+                        <a href="@Url.Action("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" } )"> <span class="glyphicon glyphicon-cog"></span></a>
 
+                    </li>*@
+
+
+                    @*Working*@
+                    @*<li><span class="glyphicon glyphicon-cog"></span>
+                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+            </li>*@
+
+
+@*new test*@
                     <li>
-                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                     <span class="glyphicon glyphicon-cog"></span> @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                     </li>
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    
+
+
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><span class="glyphicon glyphicon-log-out"></span> Log off</a></li>
                 </ul>
             </li>
         </ul>
