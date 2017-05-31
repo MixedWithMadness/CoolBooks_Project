@@ -20,7 +20,7 @@ namespace CoolBookLatest.Controllers
         // GET: Reviews
         public async Task<ActionResult> Index()
         {
-            var reviews = db.Reviews.Include(r => r.AspNetUsers).Include(r => r.Books);
+            var reviews = db.Reviews.Include(r => r.AspNetUsers).Include(r => r.Books).Where(m => m.IsDeleted == false);
             return View(await reviews.ToListAsync());
         }
 

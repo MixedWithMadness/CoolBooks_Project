@@ -36,17 +36,29 @@ namespace CoolBookLatest.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", "LastName");
+            
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
 
-            
+            var authors = db.Authors.Where(m => m.IsDeleted == false);
+            List<object> newList = new List<object>();
+            foreach (var author in authors)
+                newList.Add(new
+                {
+                    Id = author.Id,
+                    Name = author.FirstName + ", " + author.LastName
+                });
+            ViewData["AuthorId"] = new SelectList(newList, "Id", "Name", AuthorId);
+
+            //ViewBag.Authors = new SelectList(authors, "Id", "Name");
+
             var books = from s in db.Books
+                        where s.IsDeleted == false
                         select s;
 
-            if (!Request.IsAuthenticated)
-            {
-                books = books.Where(b => b.IsDeleted != true);
-            }
+            //if (!Request.IsAuthenticated)
+            //{
+            //    books = books.Where(b => b.IsDeleted != true);
+            //}
 
             if(AuthorId != 0)
             {
@@ -93,7 +105,7 @@ namespace CoolBookLatest.Controllers
                 return RedirectToAction("Index", "Books");
             }
 
-            books.Reviews = await db.Reviews.Where(b => b.BookId == id).ToListAsync();
+            books.Reviews = await db.Reviews.Where(b => b.BookId == id && b.IsDeleted == false).ToListAsync();
 
             if(books.Reviews != null)
             {
@@ -245,6 +257,18 @@ namespace CoolBookLatest.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(books).State = EntityState.Modified;
+
+                List<Reviews> reviews = await db.Reviews.Where(m => m.BookId == id).ToListAsync();
+
+                foreach(var item in reviews)
+                {
+                    item.IsDeleted = true;
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(item).State = EntityState.Modified;
+                    }
+                }
+
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

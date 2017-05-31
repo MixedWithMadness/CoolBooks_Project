@@ -1,12 +1,9 @@
-﻿@model List<Books>
+﻿@using CoolBookLatest.Enums;
+@model List<Books>
 
 @{
     ViewBag.Title = "Home Page";
 }
-
-
-
-
 <!-- Carousel -->
 <h1>Några recensioner</h1>
 <div id="myCarousel" class="carousel slide text-center" data-ride="carousel" data-interval="10000">
@@ -16,9 +13,6 @@
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-        <li data-target="#myCarousel" data-slide-to="4"></li>
-        <li data-target="#myCarousel" data-slide-to="5"></li>
     </ol>
 
     <!-- Carousel Wrappers -->
@@ -46,29 +40,6 @@
                 <p>Ullamco laboris nisi ut aliquip ex ea commodo</p>
             </div>
         </div>
-        <div class="item">
-            <img src="/Images/carousel_img_3b.jpg" class="img-responsive low-brightness">
-            <div class="carousel-caption">
-                <h1>Consequat. Duis aute irure dolor </h1>
-                <p>In reprehenderit in voluptate velit esse cillum dolore</p>
-            </div>
-        </div>
-
-        <div class="item">
-            <img src="/Images/carousel_img_4b.jpg" class="img-responsive low-brightness">
-            <div class="carousel-caption">
-                <h1>Eu fugiat nulla pariatur</h1>
-                <p>Excepteur sint occaecat cupidatat non proident sunt </p>
-            </div>
-        </div>
-
-        <div class="item">
-            <img src="/Images/carousel_img_5b.jpg" class="img-responsive low-brightness">
-            <div class="carousel-caption">
-                <h1>In culpa qui officia </h1>
-                <p>Deserunt mollit anim id est laborum</p>
-            </div>
-        </div>
     </div>
 
     <!-- Navigation, left and right arrow -->
@@ -92,46 +63,57 @@
 
 <h1>Framslumpad bok</h1>
 
-<div class="container">
-    <div class="jumbotron">
-            <a href="#"><img src="/Images/bookcover.jpg" style=""></a>
-       
-            <h1>Just nu är jag här</h1>
-            <p> Isabelle Ståhl</p>
-            <p>Elise läser på universitetet och dejtar på Tinder.</p>
-        
-    </div>
-</div>
-
-
-
-
-<!-- 6 bilder, med description -->
-
-<div class="index-6-bilder">
-    <h1>Senast skapade böcker</h1>
-
-    <!-- 6 bilder: 1 bild, med description -->
-    @foreach (var item in Model)
-    {
-        <div class="col-xs-12 col-sm-4 col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    @if (item.ImagePath != null)
-                    {
-                        <img src="@item.ImagePath" class="img-responsive">
-                    }
-                    else
-                    {
-                        <img src="/Images/bookcover.jpg" class="img-responsive">
-                    }
+<a class="" href="@Url.Action("Details","Books", new { id = Model[0].Id})">
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <img src="/Images/bookcover.jpg" style="">
                 </div>
-                <div class="panel-footer">
-                    <h3> @Html.DisplayTextFor(modelItem => item.Title) </h3>
-                    <p> @Html.DisplayTextFor(modelItem => item.Authors.FirstName), @Html.DisplayTextFor(model => item.Authors.LastName)</p>
-                    <p> @Html.DisplayTextFor(modelItem => item.Description)</p>
+
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                    <h1>Title - <span style="font-size:80%;">@Html.DisplayTextFor(modelItem => Model[0].Title)</span> </h1>
+                    <p>Description - @Html.DisplayTextFor(modelItem => Model[0].Description)</p>
+                    <p>Author - @Html.DisplayTextFor(modelItem => Model[0].Authors.FirstName) @Html.DisplayTextFor(modelItem => Model[0].Authors.LastName)</p>
+                    <p>Genre - @Html.DisplayTextFor(modelItem => Model[0].Genres.Name) </p>
+                    <p>Publised - @Html.DisplayFor(modelItem => Model[0].PublishDate) </p>
                 </div>
             </div>
         </div>
-    }
-</div>
+    </div>
+</a>
+
+
+
+
+    <!-- 6 bilder, med description -->
+
+    <div class="index-6-bilder">
+        <h1>Senast skapade böcker</h1>
+
+        <!-- 6 bilder: 1 bild, med description -->
+        @foreach (var item in Model)
+        {
+            <a href="@Url.Action("Details","Books", new { id = item.Id})">
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @if (item.ImagePath != null)
+                            {
+                                <img src="~/Content/@item.ImagePath" class="img-responsive">
+                            }
+                            else
+                            {
+                                <img src="/Images/bookcover.jpg" class="img-responsive">
+                            }
+                        </div>
+                        <div class="panel-footer">
+                            <h3>Title - <span style="font-size:80%;">@Html.DisplayTextFor(modelItem => item.Title)</span> </h3>
+                            <p>Author - @Html.DisplayTextFor(modelItem => item.Authors.FirstName), @Html.DisplayTextFor(model => item.Authors.LastName)</p>
+                            <p>Description - @Html.DisplayTextFor(modelItem => item.Description)</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        }
+    </div>

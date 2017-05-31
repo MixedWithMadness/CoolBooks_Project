@@ -88,6 +88,7 @@ h1, h2, h3, h4, h5 {
 .carousel-caption {
     bottom: 40%;
     padding-bottom: 0px;
+    color: #fff;
 }
 
 
@@ -166,18 +167,22 @@ h1, h2, h3, h4, h5 {
     box-shadow: 0 1px 3px #999;
     transition: box-shadow 0.3s;
     transition-timing-function: ease-out;
-    
+    color: #333;
+    text-decoration:none;
     
 }
+
 
 .panel:hover {
     box-shadow: 0px 1px 20px rgba(0,0,0, .2);
+    color: #333;
+    text-decoration:none;
 }
 
-
-
-
-
+.jumbotron, .jumbotron a:link, .jumbotron a:hover {
+    color: #333;
+    text-decoration:none;
+}
 
 .footer1 {
     margin-top:50px;
