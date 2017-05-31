@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -25,8 +26,10 @@ namespace CoolBookLatest.Models
         [Range(1,99,ErrorMessage ="Please enter a number between 1 and 99")]
         public Nullable<short> Part { get; set; }
         [Required(ErrorMessage = "A short Description is required")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [Required(ErrorMessage = "An ISBN is required")]
+        [Index(IsUnique = true)]
         public string ISBN { get; set; }
         [DisplayName("Publised Date")]
         [DataType(DataType.Date)]

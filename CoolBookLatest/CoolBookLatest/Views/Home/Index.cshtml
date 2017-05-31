@@ -88,14 +88,14 @@
 
     <!-- 6 bilder, med description -->
 
-    <div class="index-6-bilder">
+    <div class="index-6-bilder container">
         <h1>Senast skapade böcker</h1>
 
         <!-- 6 bilder: 1 bild, med description -->
-        @foreach (var item in Model)
+        @foreach (var item in Model.Skip(1))
         {
             <a href="@Url.Action("Details","Books", new { id = item.Id})">
-                <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="col-xs-12 col-sm-3 col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             @if (item.ImagePath != null)
