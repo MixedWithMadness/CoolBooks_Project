@@ -92,8 +92,11 @@ namespace CoolBookLatest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Books books = await db.Books.FindAsync(id);
-            
+            Books books =  (from u in db.Books
+                                where u.Id == id
+                                select u).SingleOrDefault();
+
+            books.Reviews.Clear();
             
 
             if (books == null)
@@ -105,10 +108,13 @@ namespace CoolBookLatest.Controllers
                 return RedirectToAction("Index", "Books");
             }
 
-            books.Reviews = await db.Reviews.Where(b => b.BookId == id && b.IsDeleted == false).ToListAsync();
+            books.Reviews =  db.Reviews.Where(b => b.BookId == id).Where(b => b.IsDeleted == false).ToList();
+            
 
             if(books.Reviews != null)
             {
+
+
                 foreach(var item in books.Reviews)
                 {
                     item.UserId = (from s in db.AspNetUsers
@@ -117,6 +123,7 @@ namespace CoolBookLatest.Controllers
                                   
                 }
             }
+
             ViewBag.BookId = books.Id;
             ViewBag.errorMsg = errorMsg;
 
@@ -130,8 +137,8 @@ namespace CoolBookLatest.Controllers
         public ActionResult Create()
         {
             
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName");
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
+            ViewBag.AuthorId = new SelectList(db.Authors.Where(m => m.IsDeleted == false), "Id", "FirstName");
+            ViewBag.GenreId = new SelectList(db.Genres.Where(m => m.IsDeleted == false), "Id", "Name");
             return View();
         }
 
@@ -163,17 +170,24 @@ namespace CoolBookLatest.Controllers
             newBook.Created = HttpContext.Timestamp;
             newBook.IsDeleted = false;
 
-            if (ModelState.IsValid)
+            if (db.Books.Where(m => m.ISBN == newBook.ISBN).Count() != 0)
             {
-                db.Books.Add(newBook);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                ModelState.AddModelError("ISBN", "This ISBN already exists.");
             }
-
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Books.Add(newBook);
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
             
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", newBook.AuthorId);
-            ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", newBook.GenreId);
-            return View(newBook);
+
+            ViewBag.AuthorId = new SelectList(db.Authors.Where(m => m.IsDeleted == false), "Id", "FirstName", newBook.AuthorId);
+            ViewBag.GenreId = new SelectList(db.Genres.Where(m => m.IsDeleted == false), "Id", "Name", newBook.GenreId);
+            return View(vm);
         }
 
         // GET: Books/Edit/5
