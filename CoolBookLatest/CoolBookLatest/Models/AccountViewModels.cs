@@ -127,7 +127,9 @@ namespace CoolBookLatest.Models
         public string City { get; set; }
 
        
-       
+       // [Display(Name = "Type Of User")]
+        public UserType Type { get; set; }
+
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Enter a valid phone number")]
         public string PhoneNumber { get; set; }
