@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Enums\Countries.cs" />
     <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Enums\UserType.cs" />
     <Compile Include="Genres.cs">
       <DependentUpon>OurDBMODEL.tt</DependentUpon>
     </Compile>
@@ -210,7 +211,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Models\AdminChangePasswordModel.cs" />
     <Compile Include="Models\BookViewModel.cs" />
     <Compile Include="Models\GenresModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -376,7 +378,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
-    <Content Include="Views\Manage\DeleteInfo.cshtml" />
+    <Content Include="Views\Admin\ChangeUserPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

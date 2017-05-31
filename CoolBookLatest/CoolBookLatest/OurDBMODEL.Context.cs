@@ -141,5 +141,7 @@ namespace CoolBookLatest
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+
+        public System.Data.Entity.DbSet<CoolBookLatest.Models.AdminChangePasswordModel> AdminChangePasswordModels { get; set; }
     }
 }
