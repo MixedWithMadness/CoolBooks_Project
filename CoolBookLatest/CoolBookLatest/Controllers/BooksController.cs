@@ -36,10 +36,21 @@ namespace CoolBookLatest.Controllers
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
 
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", "LastName");
+            
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name");
 
-            
+            var authors = db.Authors;
+            List<object> newList = new List<object>();
+            foreach (var author in authors)
+                newList.Add(new
+                {
+                    Id = author.Id,
+                    Name = author.FirstName + ", " + author.LastName
+                });
+            ViewData["AuthorId"] = new SelectList(newList, "Id", "Name", AuthorId);
+
+            //ViewBag.Authors = new SelectList(authors, "Id", "Name");
+
             var books = from s in db.Books
                         select s;
 
