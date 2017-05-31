@@ -62,8 +62,9 @@
 <!-- 1 bild, med description -->
 
 <h1>Framslumpad bok</h1>
-
-<a class="" href="@Url.Action("Details","Books", new { id = Model[0].Id})">
+@if (Model != null)
+{
+<a class="" href="@Url.Action("Details", "Books", new { id = Model[0].Id })">
     <div class="container">
         <div class="jumbotron">
             <div class="row">
@@ -94,7 +95,7 @@
         <!-- 6 bilder: 1 bild, med description -->
         @foreach (var item in Model)
         {
-            <a href="@Url.Action("Details","Books", new { id = item.Id})">
+            <a href="@Url.Action("Details", "Books", new { id = item.Id })">
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -117,3 +118,4 @@
             </a>
         }
     </div>
+}

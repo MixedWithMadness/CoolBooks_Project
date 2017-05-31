@@ -7,12 +7,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CoolBookLatest.Models;
+using System.Collections.Generic;
 
 namespace CoolBookLatest.Controllers
 {
+    
     [Authorize]
     public class ManageController : Controller
     {
+        CoolBooksEntities db = new CoolBooksEntities();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -75,12 +79,183 @@ namespace CoolBookLatest.Controllers
             return View(model);
         }
 
-        public async Task<ActionResult> DeleteInfo()
+        public async Task<ActionResult> DeleteStuff()
         {
+           var model = new DeletionModel();
 
-            return View();
+          var listBooks = db.Books.Where(b => b.IsDeleted.Equals(true)).ToList();
+
+            var listAuthors = db.Authors.Where(b => b.IsDeleted.Equals(true)).ToList();
+
+            var listGenres = db.Genres.Where(b => b.IsDeleted.Equals(true)).ToList();
+
+            var listReviews = db.Reviews.Where(b => b.IsDeleted.Equals(true)).ToList();
+
+
+            model.BooksList = listBooks;
+            model.authorsList = listAuthors;
+            model.genresList = listGenres;
+            model.ReviewsList = listReviews;
+
+            return View(model);
         }
 
+        public async Task<ActionResult> DeleteBook(int Id)
+        {
+            var book = db.Books.Where(b => b.Id.Equals(Id)).FirstOrDefault();
+
+            return View(book);
+        }
+        [HttpPost, ActionName("DeleteBook")]
+
+        public async Task<ActionResult> DeleteConfirmed(int Id)
+        {
+            var book = db.Books.Where(b => b.Id.Equals(Id)).FirstOrDefault();
+            if (book != null)
+            {
+                var reviews = db.Reviews.Where(r => r.BookId.Equals(Id)).ToList();
+
+                db.Reviews.RemoveRange(reviews);
+                await db.SaveChangesAsync();
+                db.Books.Remove(book);
+                await db.SaveChangesAsync();
+                return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+            else
+            {
+                return RedirectToAction("DeleteStuff", "Manage");
+            }
+        }
+
+        public async Task<ActionResult> DeleteReview(int Id)
+        {
+            var review = db.Reviews.Where(r => r.Id.Equals(Id)).FirstOrDefault();
+            if(review!=null)
+            {
+                return View(review);
+            }
+            else
+            {
+                return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+
+        }
+
+        [ActionName("DeleteReview"), HttpPost]
+        public async Task<ActionResult> DeleteReviewConfirmed(int Id)
+        {
+            var review = db.Reviews.Where(r => r.Id.Equals(Id)).FirstOrDefault();
+            if(review!=null)
+            {
+                db.Reviews.Remove(review);
+                db.SaveChangesAsync();
+               return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+
+        public async Task<ActionResult> DeleteGenres(int Id)
+        {
+            var genres = db.Genres.Where(r => r.Id.Equals(Id)).FirstOrDefault();
+            if (genres != null)
+            {
+                return View(genres);
+            }
+            else
+            {
+                return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+        }
+
+        [HttpPost, ActionName("DeleteGenres")]
+
+        public async Task<ActionResult> DeleteGenresConfirmed(int Id)
+        {
+            var genres = db.Genres.Where(b => b.Id.Equals(Id)).FirstOrDefault();
+
+            if (genres != null)
+            {
+                var books = db.Books.Where(r => r.Genres.Id.Equals(Id)).ToList();
+
+                for(int i=0; i<books.Count();i++)
+                {
+                    int bookId = books[i].Id;
+
+                    var review = db.Reviews.Where(r => r.BookId.Equals(bookId)).ToList();
+                    db.Reviews.RemoveRange(review);
+                }
+                await db.SaveChangesAsync(); // removing reviews
+
+                db.Books.RemoveRange(books);
+                await db.SaveChangesAsync(); // removing books
+
+                db.Genres.Remove(genres);
+                await db.SaveChangesAsync(); // removing genres
+                
+                return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public async Task<ActionResult> DeleteAuthor(int Id)
+        {
+            var author = db.Authors.Where(r => r.Id.Equals(Id)).FirstOrDefault();
+            if (author != null)
+            {
+                return View(author);
+            }
+            else
+            {
+                return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+        }
+
+        [HttpPost, ActionName("DeleteAuthor")]
+
+        public async Task<ActionResult> DeleteAuthorConfirmed(int Id)
+        {
+            var author = db.Authors.Where(b => b.Id.Equals(Id)).FirstOrDefault();
+
+            if (author != null)
+            {
+                var books = db.Books.Where(r => r.Authors.Id.Equals(Id)).ToList();
+
+                for (int i = 0; i < books.Count(); i++)
+                {
+                    int bookId = books[i].Id;
+
+                    var review = db.Reviews.Where(r => r.BookId.Equals(bookId)).ToList();
+                    db.Reviews.RemoveRange(review);
+                }
+                await db.SaveChangesAsync(); // removing reviews
+
+                db.Books.RemoveRange(books);
+                await db.SaveChangesAsync(); // removing books
+
+                db.Authors.Remove(author);
+                await db.SaveChangesAsync(); // removing genres
+
+                return RedirectToAction("DeleteStuff", "Manage");
+
+            }
+            else
+            {
+                return View();
+            }
+        }
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]

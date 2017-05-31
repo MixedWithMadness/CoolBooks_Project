@@ -1,0 +1,204 @@
+﻿@model CoolBookLatest.Models.DeletionModel
+@{
+    ViewBag.Title = "DeleteStuff";
+}
+
+<h3>Books to be Deleted! </h3>
+
+<div>
+    <h3>Books to be Deleted </h3>
+    <table width="90%" border="0">
+        <tr>
+            <td width="7%"> @Html.Label("BookId")</td>
+            
+            <td width="7%">  @Html.Label("AuthorId")</td>
+            <td width="7%">  @Html.Label("GenresId")</td>
+            <td width="15%">  @Html.Label("Title")</td>
+            <td width="7%">  @Html.Label("Part")</td>
+            <td width="25%">  @Html.Label("Description")</td>
+            <td width="11%">  @Html.Label("ISBN")</td>  
+            <td width="23%">  @Html.Label("Date Created")</td>
+            <td width="23%" >  @Html.Label("")</td>
+           
+
+        </tr>
+
+
+@foreach (var item in Model.BooksList)
+{
+    
+        <tr>
+
+            <td> @Html.DisplayFor(modelItem => item.Id)</td>
+            
+            
+            <td> @Html.DisplayFor(modelItem => item.AuthorId)</td>
+
+            <td> @Html.DisplayFor(modelItem => item.GenreId)</td>
+
+            <td> @Html.DisplayFor(modelItem => item.Title) </td>
+            <td> @Html.DisplayFor(modelItem => item.Part)</td>
+
+            <td> @Html.DisplayFor(modelItem => item.Description) </td>
+
+            <td> @Html.DisplayFor(modelItem => item.ISBN) </td>
+            <td> @Html.DisplayFor(modelItem => item.Created) </td>
+           
+
+
+
+
+
+            
+            <td>@Html.ActionLink("Delete", "DeleteBook", new { id = item.Id })</td>
+</tr>
+
+    
+    
+}
+</table>
+</div>
+
+
+<h3>Reviews to be Deleted </h3>
+
+<div>
+    <table width="90%" border="0">
+        <tr>
+            <td width="9%"> @Html.Label("ReviewsId")</td>
+
+            <td width="7%">  @Html.Label("BookId")</td>
+            @*<td width="7%">  @Html.Label("UserId")</td>*@
+            <td width="13%">  @Html.Label("Title")</td>
+            <td width="21%">  @Html.Label("Text")</td>
+            
+            <td width="10%">  @Html.Label("Rating")</td>
+            <td width="11%">  @Html.Label("Date Created")</td>
+            
+
+
+        </tr>
+
+
+        @foreach (var item in Model.ReviewsList)
+        {
+
+            <tr>
+
+                <td> @Html.DisplayFor(modelItem => item.Id)</td>
+
+
+                <td> @Html.DisplayFor(modelItem => item.BookId)</td>
+
+                @*<td> @Html.DisplayFor(modelItem => item.UserId)</td>*@
+
+                <td> @Html.DisplayFor(modelItem => item.Title) </td>
+                <td> @Html.DisplayFor(modelItem => item.Text)</td>
+
+                <td> @Html.DisplayFor(modelItem => item.Rating) </td>
+
+                <td> @Html.DisplayFor(modelItem => item.Created) </td>
+                
+
+
+
+
+
+
+
+                <td>@Html.ActionLink("Delete", "DeleteReview", new { id = item.Id })</td>
+            </tr>
+
+
+
+        }
+    </table>
+</div>
+
+
+
+<h3>Genres to be Deleted </h3>
+
+<div>
+    <table width="90%" border="0">
+        <tr>
+            <td width="9%"> @Html.Label("GenresId")</td>
+
+            <td width="17%">  @Html.Label("Name")</td>
+            <td width="23%">  @Html.Label("Description")</td>
+            <td width="15%">  @Html.Label("Date Created")</td>
+
+
+
+        </tr>
+
+
+        @foreach (var item in Model.genresList)
+        {
+
+            <tr>
+
+                <td> @Html.DisplayFor(modelItem => item.Id)</td>
+
+
+                <td> @Html.DisplayFor(modelItem => item.Name)</td>
+
+                @*<td> @Html.DisplayFor(modelItem => item.UserId)</td>*@
+
+                <td> @Html.DisplayFor(modelItem => item.Description) </td>
+                <td> @Html.DisplayFor(modelItem => item.Created)</td>
+
+                <td>@Html.ActionLink("Delete", "DeleteGenres", new { id = item.Id })</td>
+            </tr>
+
+
+
+        }
+    </table>
+</div>
+
+
+
+<h3>Authors to be Deleted </h3>
+
+<div>
+    <table width="90%" border="0">
+        <tr>
+            <td width="9%"> @Html.Label("AuthorId")</td>
+
+            <td width="15%">  @Html.Label("Firs tName")</td>
+            <td width="15%">  @Html.Label("Last Name")</td>
+            <td width="27%">  @Html.Label("Description")</td>
+            <td width="21%">  @Html.Label("Date Registered")</td>
+
+
+
+
+        </tr>
+
+
+        @foreach (var item in Model.authorsList)
+        {
+
+            <tr>
+
+                <td> @Html.DisplayFor(modelItem => item.Id)</td>
+
+
+                <td> @Html.DisplayFor(modelItem => item.FirstName)</td>
+
+
+                <td> @Html.DisplayFor(modelItem => item.LastName) </td>
+                <td> @Html.DisplayFor(modelItem => item.Description) </td>
+
+
+                <td> @Html.DisplayFor(modelItem => item.Created)</td>
+
+                <td>@Html.ActionLink("Delete", "DeleteAuthor", new { id = item.Id })</td>
+            </tr>
+
+
+
+        }
+    </table>
+</div>
