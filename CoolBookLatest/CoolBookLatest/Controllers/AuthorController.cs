@@ -86,6 +86,29 @@ namespace CoolBookLatest.Controllers
                 var author = await db.Authors.FindAsync(id);
                 if(author!=null)
                 {
+                    List<Books> books = await db.Books.Where(m => m.AuthorId == id).ToListAsync();
+
+                    foreach (var item in books)
+                    {
+                        item.IsDeleted = true;
+
+                        if (ModelState.IsValid)
+                        {
+                            List<Reviews> reviews = await db.Reviews.Where(m => m.BookId == item.Id).ToListAsync();
+
+                            foreach (var item2 in reviews)
+                            {
+                                item2.IsDeleted = true;
+                                if (ModelState.IsValid)
+                                {
+                                    db.Entry(item2).State = EntityState.Modified;
+                                }
+                            }
+
+                            db.Entry(item).State = EntityState.Modified;
+                        }
+                    }
+
                     author.IsDeleted = true;
                     await db.SaveChangesAsync();
                     return RedirectToAction("Index", "Author");

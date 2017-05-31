@@ -46,7 +46,7 @@ namespace CoolBookLatest.Controllers
                 gen.Name = model.Name;
 
                 db.Genres.Add(gen);
-                db.SaveChangesAsync();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Genres");
             }
             else
@@ -145,8 +145,33 @@ namespace CoolBookLatest.Controllers
                 if(gen!=null)
                 {
                     gen.IsDeleted = true;
+
                     db.Entry(gen).State = EntityState.Modified;
-                    db.SaveChangesAsync();
+
+                    List<Books> books = await db.Books.Where(m => m.GenreId == Id).ToListAsync();
+
+                    foreach (var item in books)
+                    {
+                        item.IsDeleted = true;
+
+                        if (ModelState.IsValid)
+                        {
+                            List<Reviews> reviews = await db.Reviews.Where(m => m.BookId == item.Id).ToListAsync();
+
+                            foreach (var item2 in reviews)
+                            {
+                                item2.IsDeleted = true;
+                                if (ModelState.IsValid)
+                                {
+                                    db.Entry(item2).State = EntityState.Modified;
+                                }
+                            }
+
+                            db.Entry(item).State = EntityState.Modified;
+                        }
+                    }
+
+                    await db.SaveChangesAsync();
                     return RedirectToAction("Index", "Genres");
 
 
