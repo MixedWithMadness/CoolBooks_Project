@@ -92,8 +92,11 @@ namespace CoolBookLatest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Books books = await db.Books.FindAsync(id);
-            
+            Books books =  (from u in db.Books
+                                where u.Id == id
+                                select u).SingleOrDefault();
+
+            books.Reviews.Clear();
             
 
             if (books == null)
@@ -105,10 +108,13 @@ namespace CoolBookLatest.Controllers
                 return RedirectToAction("Index", "Books");
             }
 
-            books.Reviews = await db.Reviews.Where(b => b.BookId == id && b.IsDeleted == false).ToListAsync();
+            books.Reviews =  db.Reviews.Where(b => b.BookId == id).Where(b => b.IsDeleted == false).ToList();
+            
 
             if(books.Reviews != null)
             {
+
+
                 foreach(var item in books.Reviews)
                 {
                     item.UserId = (from s in db.AspNetUsers
@@ -117,6 +123,7 @@ namespace CoolBookLatest.Controllers
                                   
                 }
             }
+
             ViewBag.BookId = books.Id;
             ViewBag.errorMsg = errorMsg;
 
