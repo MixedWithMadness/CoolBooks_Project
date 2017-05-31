@@ -75,6 +75,12 @@ namespace CoolBookLatest.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> DeleteInfo()
+        {
+
+            return View();
+        }
+
         //
         // POST: /Manage/RemoveLogin
         [HttpPost]
