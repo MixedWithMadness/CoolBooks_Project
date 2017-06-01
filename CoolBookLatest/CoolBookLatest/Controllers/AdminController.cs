@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -141,22 +142,29 @@ namespace CoolBookLatest.Models
             return View();
         }
        
-        public async Task<ActionResult> ChangeUserPassword()
-        {
-            //var model = new CoolBookLatest.Models.AdminChangePasswordModel();
-            return View();
-        }
-
-        //public async Task<ActionResult> ChangeUserPassword( AdminChangePasswordModel model)
+        //public async Task<ActionResult> ChangeUserPassword()
         //{
-        //    if(ModelState.IsValid)
+        //    var model = new CoolBookLatest.Models.AdminChangePasswordModel();
+        //    return View();
+        //}
+        
+        //public async Task<ActionResult> ChangeUserPassword(AdminChangePasswordModel model)
+        //{
+        //    if (ModelState.IsValid)
         //    {
-        //        //var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-        //        //if (result.Succeeded)
-        //        //{
-        //        //    return RedirectToAction("ResetPasswordConfirmation", "Account");
-        //        //}
+        //        var result = await Microsoft.AspNet.Identity.UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("ResetPasswordConfirmation", "Account");
+        //        }
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
         //}
 }
 }
+
 
