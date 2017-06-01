@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $('#CreateForm input').blur(function () {
+        if (!$(this).val()) {
+            $(".field-validation-valid text-danger").val("please enter text");
+        }
+    });
     $(".rating-star-block .star").mouseleave(function () {
         $("#" + $(this).parent().attr('id') + " .star").each(function () {
             $(this).addClass("outline");
@@ -36,7 +41,9 @@
             data: "{Title: '" + titlee + "', BookId: '" + bookid + "', Text: '" + texte + "',  Rating: '" + v + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function () { refresh(); }
+            success: function refresh() {
+                location.reload();
+            }
         });
     });
 });
