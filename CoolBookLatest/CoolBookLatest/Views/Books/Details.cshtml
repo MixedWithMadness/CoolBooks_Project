@@ -217,7 +217,7 @@
                 @Html.TextAreaFor(modelItem => item.Text, new { cols = "55", rows = "5", @readonly = "readonly" })
                 
             </div>
-            @if(User.IsInRole("Admin"))
+            @if(User.IsInRole("Admin") || User.IsInRole("Moderator"))
             {
             <div>
                 @Html.ActionLink("Delete", "Delete", "Reviews", new { id = item.Id }, null)
