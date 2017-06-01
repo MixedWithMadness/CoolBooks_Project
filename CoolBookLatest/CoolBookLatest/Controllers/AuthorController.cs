@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CoolBookLatest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AuthorController : Controller
     {
         // GET: Author

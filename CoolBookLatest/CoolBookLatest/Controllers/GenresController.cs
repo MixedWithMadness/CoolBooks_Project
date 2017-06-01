@@ -9,7 +9,7 @@ using System.Data.Entity;
 
 namespace CoolBookLatest.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class GenresController : Controller
     {
         CoolBooksEntities db = new CoolBooksEntities();

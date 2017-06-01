@@ -78,7 +78,7 @@ namespace CoolBookLatest.Controllers
             };
             return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteStuff()
         {
            var model = new DeletionModel();
@@ -99,7 +99,7 @@ namespace CoolBookLatest.Controllers
 
             return View(model);
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteBook(int Id)
         {
             var book = db.Books.Where(b => b.Id.Equals(Id)).FirstOrDefault();
@@ -127,7 +127,7 @@ namespace CoolBookLatest.Controllers
                 return RedirectToAction("DeleteStuff", "Manage");
             }
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteReview(int Id)
         {
             var review = db.Reviews.Where(r => r.Id.Equals(Id)).FirstOrDefault();
@@ -142,7 +142,7 @@ namespace CoolBookLatest.Controllers
             }
 
         }
-
+        [Authorize(Roles = "Admin")]
         [ActionName("DeleteReview"), HttpPost]
         public async Task<ActionResult> DeleteReviewConfirmed(int Id)
         {
@@ -160,7 +160,7 @@ namespace CoolBookLatest.Controllers
             }
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteGenres(int Id)
         {
             var genres = db.Genres.Where(r => r.Id.Equals(Id)).FirstOrDefault();
@@ -174,9 +174,8 @@ namespace CoolBookLatest.Controllers
 
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("DeleteGenres")]
-
         public async Task<ActionResult> DeleteGenresConfirmed(int Id)
         {
             var genres = db.Genres.Where(b => b.Id.Equals(Id)).FirstOrDefault();
@@ -208,7 +207,7 @@ namespace CoolBookLatest.Controllers
                 return View();
             }
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteAuthor(int Id)
         {
             var author = db.Authors.Where(r => r.Id.Equals(Id)).FirstOrDefault();
@@ -222,7 +221,7 @@ namespace CoolBookLatest.Controllers
 
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("DeleteAuthor")]
 
         public async Task<ActionResult> DeleteAuthorConfirmed(int Id)
