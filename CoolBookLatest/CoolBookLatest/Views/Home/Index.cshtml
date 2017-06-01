@@ -93,7 +93,7 @@
         <h1>Senast skapade böcker</h1>
 
         <!-- 6 bilder: 1 bild, med description -->
-        @foreach (var item in Model)
+        @foreach (var item in Model.Skip(1))
         {
             <a href="@Url.Action("Details", "Books", new { id = item.Id })">
                 <div class="col-xs-12 col-sm-4 col-md-4">
@@ -101,17 +101,17 @@
                         <div class="panel-body">
                             @if (item.ImagePath != null)
                             {
-                                <img src="~/Content/@item.ImagePath" class="img-responsive">
+                                <img src="~/Content/@item.ImagePath" class="img-responsive" style="height:300px; width:200px;">
                             }
                             else
                             {
-                                <img src="/Images/bookcover.jpg" class="img-responsive">
+                                <img src="/Images/bookcover.jpg" class="img-responsive" style="height:300px; width:200px;">
                             }
                         </div>
-                        <div class="panel-footer">
+                        <div class="panel-footer" style="height:200px;">
                             <h3>Title - <span style="font-size:80%;">@Html.DisplayTextFor(modelItem => item.Title)</span> </h3>
                             <p>Author - @Html.DisplayTextFor(modelItem => item.Authors.FirstName), @Html.DisplayTextFor(model => item.Authors.LastName)</p>
-                            <p>Description - @Html.DisplayTextFor(modelItem => item.Description)</p>
+                            <p>Description - @Html.DisplayFor(modelItem => item.Description)</p>
                         </div>
                     </div>
                 </div>

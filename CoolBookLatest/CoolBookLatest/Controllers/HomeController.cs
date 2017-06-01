@@ -12,16 +12,18 @@ namespace CoolBookLatest.Controllers
 
         public ActionResult Index()
         {
-            List<Books> listofbooks = db.Books.Where(m => m.IsDeleted == false).OrderBy(m => m.Created).ToList();
+            List<Books> listofbooks = db.Books.Where(m => m.IsDeleted == false).OrderByDescending(m => m.Created).ToList();
             int count = listofbooks.Count();
 
             Random rand = new Random();
             List<Books> mainbook = new List<Books>();
 
-            mainbook.Add(listofbooks[rand.Next(0, count)]);
+            
 
             if (listofbooks.Count() > 7)
             {
+                mainbook.Add(listofbooks[rand.Next(0, count)]);
+
                 for (int i = 1; i < 7; i++)
                 {
                     mainbook.Add(listofbooks[i]);
