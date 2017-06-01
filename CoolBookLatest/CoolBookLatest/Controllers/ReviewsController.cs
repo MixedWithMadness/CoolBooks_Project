@@ -199,9 +199,9 @@ namespace CoolBookLatest.Controllers
             {
                 db.Entry(review).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index","Books",null);
+                return RedirectToAction("Details","Books",new { id = review.BookId });
             }
-            return RedirectToAction("Index", "Books", null);
+            return RedirectToAction("Details", "Books", new { id = review.BookId });
         }
 
         protected override void Dispose(bool disposing)

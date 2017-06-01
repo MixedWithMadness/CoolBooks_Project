@@ -6,10 +6,15 @@
 
 <h2>Details</h2>
 
-<div>
+<div class="container col-lg-4">
+    <img src="~/Content/@Model.ImagePath" alt="Book Cover" class="img-responsive img-rounded" style="width:250px; height:375px;">
+</div>
+
+<div class="container col-lg-8">
     <h4>Books</h4>
-    <hr />
+    
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -58,13 +63,14 @@
             @Html.DisplayFor(model => model.PublishDate)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.ImagePath)
-        </dt>
+            
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.ImagePath)
-        </dd>
+        </dd>*@
 
         @*<dt>
             @Html.DisplayNameFor(model => model.Created)
@@ -113,38 +119,13 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) } 
     @Html.ActionLink("Back to List", "Index")
 </p>
-
-@if (Model.Reviews != null)
-{
-    foreach (var item in Model.Reviews)
-    {
-        <hr />
-        <h4>
-           
-            @Html.DisplayTextFor(modelItem => item.Title)
-        </h4>
-
-        <h4>
-            @Html.DisplayTextFor(modelItem => item.UserId)
-        </h4>
-        <div>
-            @Html.TextBoxFor(modelItem => item.Text, new { @readonly = "readonly" })
-        </div>
-        if(User.IsInRole("Admin"))
-        {
-         <div>
-             @Html.ActionLink("Delete", "Delete", "Reviews", new { id = item.Id }, null)
-         </div>
-        }
-    }
-}
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("Create", "Reviews", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-    
-        <div class="form-horizontal">
+
+        <div class="form-horizontal col-lg-8 ">
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group hidden">
@@ -154,7 +135,7 @@
                     @Html.ValidationMessage("BookId", "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             @*<div class="form-group">
                     @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -162,7 +143,7 @@
                         @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
                     </div>
                 </div>*@
-    
+
             <div class="form-group">
                 @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -170,23 +151,23 @@
                     @Html.ValidationMessage("Title", "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.Label("Text", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.Editor("Text", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextArea("Text", new { cols = "55", rows = "5", maxlength = 500, htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessage("Text", "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.Label("Rating", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.Editor("Rating", new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessage("Rating", "", new { @class = "text-danger"})
+                    @Html.ValidationMessage("Rating", "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             @*<div class="form-group">
                     @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -194,7 +175,7 @@
                         @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
                     </div>
                 </div>*@
-    
+
             @*<div class="form-group">
                     @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -204,14 +185,14 @@
                         </div>
                     </div>
                 </div>*@
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Create" class="btn btn-default" />
                 </div>
             </div>
 
-            
+
             <div class="form-group">
                 <div class="text-danger col-md-offset-2 col-md-10">
                     @Request.Params["errorMsg"]
@@ -220,6 +201,31 @@
         </div>
     }
 }
+
+@if (Model.Reviews != null)
+{
+    foreach (var item in Model.Reviews)
+    {
+        <div>
+            <hr />
+            <h4>
+                @Html.DisplayTextFor(modelItem => item.Title) <span>|</span>
+                @Html.DisplayTextFor(modelItem => item.UserId)
+            </h4>
+            <div>
+                @Html.TextAreaFor(modelItem => item.Text, new { cols = "55", rows = "5", @readonly = "readonly" })
+                <span id="charsLeft"></span>
+            </div>
+            @if(User.IsInRole("Admin"))
+            {
+            <div>
+                @Html.ActionLink("Delete", "Delete", "Reviews", new { id = item.Id }, null)
+            </div>
+            }
+        </div>
+    }
+}
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

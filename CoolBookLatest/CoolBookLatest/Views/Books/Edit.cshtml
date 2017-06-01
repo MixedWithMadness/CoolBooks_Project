@@ -125,7 +125,17 @@
         </div>
     </div>
 }
-
+<br />
+<div class="container-fluid">
+    @using (Html.BeginForm("FileUpload", "Books", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label for="file">Upload Image:</label>
+        <input type="file" name="file" id="file" style="width: 100%;" />
+        <input type="hidden" name="BookId" id="BookId" value="@Model.Id"/>
+        <input type="submit" value="Upload" class="submit" />
+    }
+</div>
+<br />
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

@@ -25,4 +25,11 @@ $(window).scroll(function () {
     }
 });
 
+$(function () {
+    $("#questionInput").keyup(function () {
+        var charsLeft = $(this).attr("maxlength") - $(this).val().length;
+        $("#charsLeft").text(charsLeft + " characters left");
+    });
+});
+
 // Navbar shrink code end
