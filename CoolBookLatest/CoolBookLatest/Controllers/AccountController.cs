@@ -76,20 +76,19 @@ namespace CoolBookLatest.Controllers
             {
                 return View(model);
             }
+            var user = UserManager.FindByEmail(model.Email);
 
-            var userId = UserManager.FindByEmail(model.Email).Id;
+            if (user!=null)
+            {
+                var userId = UserManager.FindByEmail(model.Email).Id;
+            
+            
             
             //if(!UserManager.IsEmailConfirmed(userId))
             //{
             //    return View("EmailNotConfirmed");
             //}
-            if(userId == null)
-            {
-                return View(model);
-
-            }
-            else
-            {
+            
 
             
 
@@ -115,6 +114,10 @@ namespace CoolBookLatest.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+            }
+            else
+            {
+                return View(model);
             }
         }
 
