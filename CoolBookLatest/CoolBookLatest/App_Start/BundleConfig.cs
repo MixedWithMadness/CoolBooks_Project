@@ -24,6 +24,7 @@ namespace CoolBookLatest
                       "~/Scripts/bootstrapValidator.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/Validation.js",
+                      "~/Scripts/review.js",
                       "~/Scripts/contact.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
