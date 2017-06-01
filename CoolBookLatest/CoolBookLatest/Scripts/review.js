@@ -15,7 +15,9 @@
 
         var v = $(this).attr('rating');
         var texte = $("#CreateForm input[name='Text']").val();
+        var texte = $("#CreateForm textarea[name='Text']").val();
         var bookid = $("#CreateForm select[name='BookId']").val();
+        var bookid = $("#CreateForm input[name='BookId']").val();
         var titlee = $("#CreateForm input[name='Title']").val();
         var token = $("#CreateForm input[name='__RequestVerificationToken']").val();
         var newScore = 0;
@@ -33,7 +35,8 @@
             },
             data: "{Title: '" + titlee + "', BookId: '" + bookid + "', Text: '" + texte + "',  Rating: '" + v + "'}",
             contentType: "application/json; charset=utf-8",
-            dataType: "json"
+            dataType: "json",
+            success: function () { refresh(); }
         });
     });
 });
