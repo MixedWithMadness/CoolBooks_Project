@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
+
 @if (User.IsInRole("Admin"))
 {
 
@@ -12,11 +13,15 @@
             <ul class="dropdown-menu">
                 <li><a href="#">@Html.ActionLink("All Books", "Index", "Books")</a></li>
                 <li><a href="#">@Html.ActionLink("My Books", "MyBooks", "Books")</a></li>
-                <li><a href="#">@Html.ActionLink("Authors", "Index", "Author")</a></li>
+                @*<li><a href="#">@Html.ActionLink("Authors", "Index", "Author")</a></li>
                 <li><a href="#">@Html.ActionLink("Reviews", "Index", "Reviews")</a></li>
-                <li><a href="#">@Html.ActionLink("Genres", "Index", "Genres")</a></li>
+                <li><a href="#">@Html.ActionLink("Genres", "Index", "Genres")</a></li>*@
             </ul>
         </li>
+        <li>@Html.ActionLink("Authors", "Index", "Author")</li>
+        <li>@Html.ActionLink("Genres", "Index", "Genres")</li>
+        <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
+
     </ul>
 
             @*<ul class="nav navbar-nav">
@@ -32,11 +37,40 @@
 
 
         }
-        else
+
+        else if(User.IsInRole("User"))
         {
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                <li>@Html.ActionLink("My Books", "MyBooks", "Books")</li>
+
             </ul>
-        }
+     }
+         
+      @if (User.IsInRole("Moderator"))
+       {
+                 <ul class="nav navbar-nav">
+                 <li>@Html.ActionLink("About", "About", "Home")</li>
+                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                 <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                 <li>@Html.ActionLink("My Books", "MyBooks", "Books")</li>
+                 <li>@Html.ActionLink("Reviews", "Index", "Reviews")</li>
+
+                </ul>
+      }
+
+ @if(!Request.IsAuthenticated)
+{
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+        <li>@Html.ActionLink("Register", "Register", "Account")</li>
+
+
+
+    </ul>
+
+}

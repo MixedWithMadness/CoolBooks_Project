@@ -76,15 +76,22 @@ namespace CoolBookLatest.Controllers
             {
                 return View(model);
             }
+            var user = UserManager.FindByEmail(model.Email);
 
-            var userId = UserManager.FindByEmail(model.Email).Id;
+            if (user!=null)
+            {
+                var userId = UserManager.FindByEmail(model.Email).Id;
+            
+            
             
             //if(!UserManager.IsEmailConfirmed(userId))
             //{
             //    return View("EmailNotConfirmed");
             //}
+            
 
             
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -106,6 +113,11 @@ namespace CoolBookLatest.Controllers
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
+            }
+            }
+            else
+            {
+                return View(model);
             }
         }
 
