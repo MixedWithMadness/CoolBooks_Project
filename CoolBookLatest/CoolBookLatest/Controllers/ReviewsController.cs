@@ -18,13 +18,15 @@ namespace CoolBookLatest.Controllers
         private CoolBooksEntities db = new CoolBooksEntities();
 
         // GET: Reviews
+        [Authorize]
         public async Task<ActionResult> Index()
         {
-            var reviews = db.Reviews.Include(r => r.AspNetUsers).Include(r => r.Books);
+            var reviews = db.Reviews.Include(r => r.AspNetUsers).Include(r => r.Books).Where(m => m.IsDeleted == false);
             return View(await reviews.ToListAsync());
         }
 
         // GET: Reviews/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,6 +42,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // GET: Reviews/Create
+        [Authorize]
         public ActionResult Create()
         {
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email");
@@ -53,6 +56,7 @@ namespace CoolBookLatest.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult> Create([Bind(Include = "Id,BookId,Title,Text,Rating")] ReviewViewModel review)
         {
             Reviews reviews = new Reviews();
@@ -106,6 +110,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // GET: Reviews/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -128,6 +133,7 @@ namespace CoolBookLatest.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,BookId,UserId,Title,Text,Rating,Created,IsDeleted")] ReviewViewModel reviews)
         {
             Reviews review = await db.Reviews.FindAsync(reviews.Id);
@@ -159,6 +165,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // GET: Reviews/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,6 +181,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // POST: Reviews/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

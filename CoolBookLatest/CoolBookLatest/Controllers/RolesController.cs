@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace CoolBookLatest.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         CoolBooksEntities db = new CoolBooksEntities();

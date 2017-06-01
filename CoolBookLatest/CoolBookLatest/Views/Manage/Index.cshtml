@@ -86,5 +86,12 @@
                     }
                 }*@
         </dd>
+        @if (User.IsInRole("Admin"))
+        {
+            <dt>Delete: </dt>
+            <dd>
+                <a href="@Url.Action("DeleteStuff","Manage")" , Text="Edit">See items marked for deletion</a>
+            </dd>
+        }
     </dl>
 </div>

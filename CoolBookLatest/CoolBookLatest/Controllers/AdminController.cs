@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace CoolBookLatest.Models
     {
         // GET: Admin
         CoolBooksEntities db = new CoolBooksEntities();
-
+        //  [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index()
         {
             var list =  db.AspNetUsers.ToList();
@@ -97,5 +99,72 @@ namespace CoolBookLatest.Models
             return View();
 
         }
+        [ActionName("Edit"), HttpPost]
+        public async Task<ActionResult> EditConfirmed (AspNetUsers gotten)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = db.AspNetUsers.Where(u => u.Id.Equals(gotten.Id)).FirstOrDefault();
+
+                if (user != null)
+                {
+                    user.AccessFailedCount = gotten.AccessFailedCount;
+                    user.EmailConfirmed = gotten.EmailConfirmed;
+
+                    user.Email = gotten.Email;
+
+                    user.LockoutEnabled = gotten.LockoutEnabled;
+
+                    user.LockoutEndDateUtc = gotten.LockoutEndDateUtc; //problem
+
+                    user.PhoneNumberConfirmed = gotten.PhoneNumberConfirmed;
+
+                    user.TwoFactorEnabled = gotten.TwoFactorEnabled;
+
+                    user.UserName = gotten.Email;
+
+                    gotten.UserName = gotten.Email;
+
+                    db.Entry(user).State = EntityState.Modified;
+
+                    await db.SaveChangesAsync();
+
+                    return RedirectToActionPermanent("Index", "Admin");
+                    
+                }
+            
+            else
+            {
+                return View();
+            }
+                
     }
+            return View();
+        }
+       
+        //public async Task<ActionResult> ChangeUserPassword()
+        //{
+        //    var model = new CoolBookLatest.Models.AdminChangePasswordModel();
+        //    return View();
+        //}
+        
+        //public async Task<ActionResult> ChangeUserPassword(AdminChangePasswordModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await Microsoft.AspNet.Identity.UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+        //        if (result.Succeeded)
+        //        {
+        //            return RedirectToAction("ResetPasswordConfirmation", "Account");
+        //        }
+        //        return View();
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //}
 }
+}
+
+

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CoolBookLatest.Models;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 
 namespace CoolBookLatest.Controllers
 {
@@ -180,7 +181,7 @@ namespace CoolBookLatest.Controllers
             model.IsDeleted = false;
 
             if (ModelState.IsValid)
-            {
+      {
                 var aspUser = new ApplicationUser { UserName = model.Email, Email = model.Email, PhoneNumber=model.PhoneNumber };
 
                 Users tempUser = new Users();
@@ -199,12 +200,8 @@ namespace CoolBookLatest.Controllers
                 tempUser.Address = model.Address;
                 tempUser.City = model.City;
                 tempUser.Birthdate = model.DateOfBirth;
-
-
-
-                //tempUser.Gender = model.selectedGener.ToString();
                
-
+            
                 if(model.selectedGener.ToString()=="Male")
                 {
                     tempUser.Gender = "1";
@@ -215,16 +212,40 @@ namespace CoolBookLatest.Controllers
                 }
 
                 var result = await UserManager.CreateAsync(aspUser, model.Password);
-               
 
-               
                
                 //Write here code for adding Data into UserTable
 
 
                 if (result.Succeeded)
-                {
+                 {
                     db.Users.Add(tempUser);
+                    //db.AspNetUserRoles 
+
+
+                    string stringValue = model.Type.ToString();
+
+
+                        int roleId = GetRoleID(stringValue);
+
+                        string conString = @"Data Source=ELEV\SQLEXPRESS;Initial Catalog=CoolBooks;Integrated Security=True";
+                    SqlConnection con = new SqlConnection(conString);
+                    con.Open();
+
+
+                    string query = "INSERT into AspNetUserRoles (UserId, RoleId) VALUES (@UserId, @RoleId)";
+
+                    SqlCommand cmdInsert = new SqlCommand(query, con);
+
+                    cmdInsert.Parameters.Add("@UserId", aspUser.Id);
+
+                    cmdInsert.Parameters.Add("@RoleID", roleId);
+
+      
+
+                    cmdInsert.ExecuteNonQuery();
+
+
 
                     db.SaveChanges();
 
@@ -242,15 +263,40 @@ namespace CoolBookLatest.Controllers
                     mailer.Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>";
                     mailer.IsHtml = true;
                     mailer.Send();
-                   // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                AddErrors(result);   //return RedirectToAction("Index", "Home");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+
+
+        }
+           
+        
+
+
+        private int GetRoleID(string value)
+        {
+            if(value=="Admin")
+            {
+                return 1;
+            }
+            else if(value=="0")
+            {
+                return 2;
+            }
+           else  if(value=="Moderator")
+            {
+                return 3;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         //
@@ -346,6 +392,9 @@ namespace CoolBookLatest.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
+
+
+
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
