@@ -14,13 +14,18 @@ namespace CoolBookLatest.Models
         public int BookId { get; set; }
         
         public string UserId { get; set; }
+
         [Required(ErrorMessage = "Please enter a Title")]
         [MinLength(4)]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Please enter a summary")]
+
+
+        [Required(ErrorMessage = "Please enter your comments")]
+        [StringLength (200, MinimumLength =5, ErrorMessage =" Comments must be between 5 and 200 characters long")]
         public string Text { get; set; }
+
         [Required]
-        [Range(1,10,ErrorMessage ="Plese enter 1-10")]
+        [Range(1,5,ErrorMessage ="Plese enter a digit between 1 and 5")]
         public Nullable<byte> Rating { get; set; }
         
         public System.DateTime Created { get; set; }

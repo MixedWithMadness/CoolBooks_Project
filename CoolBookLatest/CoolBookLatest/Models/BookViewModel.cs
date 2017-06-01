@@ -13,21 +13,32 @@ namespace CoolBookLatest.Models
     public class BookViewModel
     {
         public int Id { get; set; }
+
         [DisplayName("Author")]
         public int AuthorId { get; set; }
         [DisplayName("Genre")]
         public int GenreId { get; set; }
+
         [Required(ErrorMessage = "A Title is required")]
-        [MaxLength(255, ErrorMessage ="Please write The titel under 255 characters")]
+        [StringLength(255, MinimumLength =3, ErrorMessage ="Please write The titel under between 3 and 255 characters long")]
         public string Title { get; set; }
-        [MaxLength(255, ErrorMessage = "Please write The Alternative titel under 255 characters")]
+
+        [StringLength(255, MinimumLength = 3, ErrorMessage = "Please write The alt.titel under between 3 and 255 characters long")]
         [DisplayName("Alt. Titel")]
         public string AlternativeTitle { get; set; }
         [Range(1,99,ErrorMessage ="Please enter a number between 1 and 99")]
         public Nullable<short> Part { get; set; }
+
+
         [Required(ErrorMessage = "A short Description is required")]
+        [StringLength (300, MinimumLength =5, ErrorMessage =" Please write between 5 and 300 characters.")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+
+
+
+        [StringLength(25, MinimumLength = 9, ErrorMessage ="Write ISBN between 9 and 25 digits long")]
+        [RegularExpression("([0-9,-_]*)", ErrorMessage = "Only digits are dashes are allowed")]
         [Required(ErrorMessage = "An ISBN is required")]
         [Index(IsUnique = true)]
         public string ISBN { get; set; }

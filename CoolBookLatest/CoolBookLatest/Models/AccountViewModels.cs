@@ -72,15 +72,16 @@ namespace CoolBookLatest.Models
         public string Email { get; set; }
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(45)]
+        [StringLength(45, MinimumLength = 2)]
+        [RegularExpression("([a-z,A-ZöåäÖÅÄ]*)", ErrorMessage = "Endast Svenska och Engelska ord är accepterad")]
         [Display(Name = "First Name")]
+
         public string FirstName { get; set; }
 
 
         [Required]
-        [MinLength(3)]
-        [MaxLength(45)]
+        [StringLength(45, MinimumLength = 2)]
+        [RegularExpression("([a-z,A-ZöåäÖÅÄ]*)", ErrorMessage = "Endast Svenska och Engelska ord är accepterad")]
 
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
@@ -109,6 +110,7 @@ namespace CoolBookLatest.Models
 
         
         [MaxLength(15)]
+        [RegularExpression("([0-9]*)", ErrorMessage = "ZipCode must be a natural number")]
         [Display(Name = "Zip Code")]
         public string ZipCode { get; set; }
 
@@ -130,7 +132,11 @@ namespace CoolBookLatest.Models
        // [Display(Name = "Type Of User")]
         public UserType Type { get; set; }
 
+
+        [Required]
         [Display(Name = "Phone Number")]
+        [RegularExpression("([0-9,-]*)", ErrorMessage = "Phone number must be a natural number")]
+
         [DataType(DataType.PhoneNumber, ErrorMessage = "Enter a valid phone number")]
         public string PhoneNumber { get; set; }
 

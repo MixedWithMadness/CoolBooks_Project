@@ -24,8 +24,6 @@ namespace CoolBookLatest
                       "~/Scripts/bootstrapValidator.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/Validation.js",
-                      "~/Scripts/site.js",
-                      "~/Scripts/review.js",
                       "~/Scripts/contact.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -33,7 +31,8 @@ namespace CoolBookLatest
                       "~/Content/site.css",
                       "~/Content/site2.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/bootstrapValidator.css"
+                      "~/Content/bootstrapValidator.css",
+                      "~/Scripts/site.js"
                       ));
             
 

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using CoolBookLatest;
 using Microsoft.AspNet.Identity;
 using CoolBookLatest.Models;
+using System.IO;
 
 namespace CoolBookLatest.Controllers
 {
@@ -198,6 +199,10 @@ namespace CoolBookLatest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+
+          
+
             Books books = await db.Books.FindAsync(id);
 
             if (books == null)
@@ -289,7 +294,40 @@ namespace CoolBookLatest.Controllers
             return RedirectToAction("Index");
 
         }
+        public async Task<ActionResult> FileUpload(HttpPostedFileBase file, int BookId)
+        {
+            if (file != null)
+            {
+                string pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(
+                                       Server.MapPath("~/Content/"), pic);
+                // file is uploaded
+                file.SaveAs(path);
 
+                var book = await db.Books.FindAsync(BookId);
+                book.ImagePath = pic;
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(book).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                }
+                else { return RedirectToAction("Edit", "Books", new { id = BookId }); }
+
+                // save the image path path to the database or you can send image
+                // directly to database
+                // in-case if you want to store byte[] ie. for DB
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    file.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
+                }
+
+                return RedirectToAction("Details", "Books", new { id = BookId });
+            }
+            // after successfully uploading redirect the user
+            return RedirectToAction("Edit", "Books", new { id = BookId });
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
