@@ -377,6 +377,7 @@ namespace CoolBookLatest.Controllers
         //
         // POST: /Manage/RemovePhoneNumber
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RemovePhoneNumber()
         {
@@ -458,6 +459,7 @@ namespace CoolBookLatest.Controllers
 
         //
         // GET: /Manage/ManageLogins
+        [Authorize]
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
