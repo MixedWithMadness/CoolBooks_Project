@@ -199,6 +199,10 @@ namespace CoolBookLatest.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+
+          
+
             Books books = await db.Books.FindAsync(id);
 
             if (books == null)

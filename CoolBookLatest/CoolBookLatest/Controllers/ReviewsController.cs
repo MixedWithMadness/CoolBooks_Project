@@ -13,6 +13,8 @@ using Microsoft.AspNet.Identity;
 
 namespace CoolBookLatest.Controllers
 {
+    
+
     public class ReviewsController : Controller
     {
         private CoolBooksEntities db = new CoolBooksEntities();
@@ -110,7 +112,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // GET: Reviews/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -133,7 +135,7 @@ namespace CoolBookLatest.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<ActionResult> Edit([Bind(Include = "Id,BookId,UserId,Title,Text,Rating,Created,IsDeleted")] ReviewViewModel reviews)
         {
             Reviews review = await db.Reviews.FindAsync(reviews.Id);
@@ -165,7 +167,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // GET: Reviews/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -181,7 +183,7 @@ namespace CoolBookLatest.Controllers
         }
 
         // POST: Reviews/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
@@ -199,6 +201,10 @@ namespace CoolBookLatest.Controllers
             {
                 db.Entry(review).State = EntityState.Modified;
                 await db.SaveChangesAsync();
+
+                ViewBag.ReturnUrl = Request.UrlReferrer.AbsolutePath;
+               
+                //return RedirectToRoute  (ViewBag.);
                 return RedirectToAction("Details","Books",new { id = review.BookId });
             }
             return RedirectToAction("Details", "Books", new { id = review.BookId });

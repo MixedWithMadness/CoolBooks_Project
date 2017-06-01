@@ -18,7 +18,7 @@ namespace CoolBookLatest.Controllers
         CoolBooksEntities db = new CoolBooksEntities();
 
 
-
+        [Authorize]
         public ActionResult Edit()
         {
             var loggedInUser = User.Identity.GetUserId();

@@ -9,12 +9,13 @@ using System.Web.Mvc;
 
 namespace CoolBookLatest.Models
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         // GET: Admin
         CoolBooksEntities db = new CoolBooksEntities();
         //  [Authorize(Roles = "User")]
-        [Authorize(Roles = "Admin")]
+       
         public async Task<ActionResult> Index()
         {
             var list =  db.AspNetUsers.ToList();
