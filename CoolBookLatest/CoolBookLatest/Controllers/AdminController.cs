@@ -13,8 +13,8 @@ namespace CoolBookLatest.Models
     {
         // GET: Admin
         CoolBooksEntities db = new CoolBooksEntities();
-      //  [Authorize(Roles = "User")]
-
+        //  [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Index()
         {
             var list =  db.AspNetUsers.ToList();

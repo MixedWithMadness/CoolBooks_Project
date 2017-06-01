@@ -102,7 +102,7 @@
         @*<td>
             @Html.DisplayFor(modelItem => item.Genres.Name)
         </td>*@
-        @if (Request.IsAuthenticated)
+        @if (User.IsInRole("Admin"))
         { 
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

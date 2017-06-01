@@ -3,12 +3,34 @@
 @{
     ViewBag.Title = "Create";
 }
+<style type="text/css">
+    .rating-star-block .star.outline {
+        background: url("/Images/star-empty-lg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    }
 
+    .rating-star-block .star.filled {
+        background: url("/Images/star-fill-lg.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    }
+
+    .rating-star-block .star {
+        color: rgba(0,0,0,0);
+        display: inline-block;
+        height: 24px;
+        overflow: hidden;
+        text-indent: -999em;
+        width: 24px;
+    }
+
+    a {
+        color: #005782;
+        text-decoration: none;
+    }
+</style>
 <h2>Create</h2>
 
 @using (Html.BeginForm()) 
 {
-    @Html.AntiForgeryToken()
+    
     
     <div class="form-horizontal">
         <h4>Reviews</h4>
@@ -48,8 +70,13 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10 rating-star-block" id="1">
+                @Html.AntiForgeryToken()
+                <a class="star outline" href="#" rating="1" title="vote 1"> vote 1</a>
+                <a class="star outline" href="#" rating="2" title="vote 2"> vote 2</a>
+                <a class="star outline" href="#" rating="3" title="vote 3"> vote 3</a>
+                <a class="star outline" href="#" rating="4" title="vote 4"> vote 4</a>
+                <a class="star outline" href="#" rating="5" title="vote 5"> vote 5</a>
                 @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -76,6 +103,9 @@
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
+        </div>
+        <div id="myElem" style="position:absolute; top:10px; left:50%; display:none; background-color:yellow; padding:5px; border:1px solid red">
+            Thank you for your rating!
         </div>
     </div>
 }
