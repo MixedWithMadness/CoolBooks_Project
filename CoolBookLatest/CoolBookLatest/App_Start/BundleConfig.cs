@@ -9,7 +9,6 @@ namespace CoolBookLatest
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery - 1.10.2.min.js",
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -25,8 +24,6 @@ namespace CoolBookLatest
                       "~/Scripts/bootstrapValidator.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/Validation.js",
-                      "~/Scripts/site.js",
-                      "~/Scripts/review.js",
                       "~/Scripts/contact.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
@@ -34,7 +31,8 @@ namespace CoolBookLatest
                       "~/Content/site.css",
                       "~/Content/site2.css",
                       "~/Content/font-awesome.min.css",
-                      "~/Content/bootstrapValidator.css"
+                      "~/Content/bootstrapValidator.css",
+                      "~/Scripts/site.js"
                       ));
             
 
