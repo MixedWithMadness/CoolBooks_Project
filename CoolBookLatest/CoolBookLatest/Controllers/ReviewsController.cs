@@ -50,12 +50,32 @@ namespace CoolBookLatest.Controllers
 
             return View();
         }
+        public class ValidateAntiForgeryHeader : FilterAttribute, IAuthorizationFilter
+        {
+            public void OnAuthorization(AuthorizationContext filterContext)
+            {
+                string clientToken = filterContext.RequestContext.HttpContext.Request.Headers.Get(KEY_NAME);
+                if (clientToken == null)
+                {
+                    throw new HttpAntiForgeryException(string.Format("Header does not contain {0}", KEY_NAME));
+                }
 
+                string serverToken = filterContext.HttpContext.Request.Cookies.Get(KEY_NAME).Value;
+                if (serverToken == null)
+                {
+                    throw new HttpAntiForgeryException(string.Format("Cookies does not contain {0}", KEY_NAME));
+                }
+
+                System.Web.Helpers.AntiForgery.Validate(serverToken, clientToken);
+            }
+
+            private const string KEY_NAME = "__RequestVerificationToken";
+        }
         // POST: Reviews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryHeader]
         [Authorize]
         public async Task<ActionResult> Create([Bind(Include = "Id,BookId,Title,Text,Rating")] ReviewViewModel review)
         {
