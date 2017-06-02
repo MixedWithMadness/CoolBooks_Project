@@ -138,8 +138,19 @@ namespace CoolBookLatest.Controllers
         public ActionResult Create()
         {
             
-            ViewBag.AuthorId = new SelectList(db.Authors.Where(m => m.IsDeleted == false), "Id", "FirstName");
+            //ViewBag.AuthorId = new SelectList(db.Authors.Where(m => m.IsDeleted == false), "Id", "FirstName");
+            var authors = db.Authors.Where(m => m.IsDeleted == false);
+            List<object> newList = new List<object>();
+            foreach (var author in authors)
+                newList.Add(new
+                {
+                    Id = author.Id,
+                    Name = author.FirstName + ", " + author.LastName
+                });
+            ViewData["AuthorId"] = new SelectList(newList, "Id", "Name");
+
             ViewBag.GenreId = new SelectList(db.Genres.Where(m => m.IsDeleted == false), "Id", "Name");
+
             return View();
         }
 
@@ -215,7 +226,16 @@ namespace CoolBookLatest.Controllers
 
 
             //ViewBag.UserId = new SelectList(db.AspNetUsers, "Id", "Email", books.UserId);
-            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", books.AuthorId);
+            //ViewBag.AuthorId = new SelectList(db.Authors, "Id", "FirstName", books.AuthorId);
+            var authors = db.Authors.Where(m => m.IsDeleted == false);
+            List<object> newList = new List<object>();
+            foreach (var author in authors)
+                newList.Add(new
+                {
+                    Id = author.Id,
+                    Name = author.FirstName + ", " + author.LastName
+                });
+            ViewData["AuthorId"] = new SelectList(newList, "Id", "Name");
             ViewBag.GenreId = new SelectList(db.Genres, "Id", "Name", books.GenreId);
             return View(vm);
         }
