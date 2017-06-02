@@ -28,10 +28,9 @@
 </style>
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Reviews", "Create", FormMethod.Post, new { id = "CreateForm" }))
 {
-    
-    
+    @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <h4>Reviews</h4>
         <hr />
@@ -71,13 +70,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 rating-star-block" id="1">
-                @Html.AntiForgeryToken()
+                
                 <a class="star outline" href="#" rating="1" title="vote 1"> vote 1</a>
                 <a class="star outline" href="#" rating="2" title="vote 2"> vote 2</a>
                 <a class="star outline" href="#" rating="3" title="vote 3"> vote 3</a>
                 <a class="star outline" href="#" rating="4" title="vote 4"> vote 4</a>
                 <a class="star outline" href="#" rating="5" title="vote 5"> vote 5</a>
-                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -99,12 +97,12 @@
             </div>
         </div>*@
 
-        <div class="form-group">
+        <!--div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
-        </div>
-        <div id="myElem" style="position:absolute; top:10px; left:50%; display:none; background-color:yellow; padding:5px; border:1px solid red">
+        </div!-->
+        <div id="myElem" style="top:10px; left:50%; display:none; background-color:yellow; padding:5px; border:1px solid red">
             Thank you for your rating!
         </div>
     </div>

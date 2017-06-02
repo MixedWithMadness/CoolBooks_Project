@@ -1,4 +1,9 @@
 ﻿$(document).ready(function () {
+    $('#CreateForm input').blur(function () {
+        if (!$(this).val()) {
+            $(".field-validation-valid text-danger").val("please enter text");
+        }
+    });
     $(".rating-star-block .star").mouseleave(function () {
         $("#" + $(this).parent().attr('id') + " .star").each(function () {
             $(this).addClass("outline");
@@ -14,22 +19,30 @@
     $(".rating-star-block .star").click(function () {
 
         var v = $(this).attr('rating');
+        var texte = $("#CreateForm input[name='Text']").val();
+        var texte = $("#CreateForm textarea[name='Text']").val();
+        var bookid = $("#CreateForm select[name='BookId']").val();
+        var bookid = $("#CreateForm input[name='BookId']").val();
+        var titlee = $("#CreateForm input[name='Title']").val();
+        var token = $("#CreateForm input[name='__RequestVerificationToken']").val();
         var newScore = 0;
         var updateP = "#" + $(this).parent().attr('id') + ' .CurrentScore';
 
         $("#" + $(this).parent().attr('id') + " .star").hide();
+        $("#myElem").show('1000').delay(2000);
         $("#" + $(this).parent().attr('id') + " .yourScore").html("Your Score is : &nbsp;<b style='color:#ff9900; font-size:15px'>" + v + "</b>");
+
         $.ajax({
             type: "POST",
             url: "/Reviews/Create/",
-            data: "{Title: 'sdfsdf sdfsdf  sdf', BookId: '5', Text: 'dfsfsd f sdf s df  sdf  sdf sd f',  __RequestVerificationToken: '" + token + "',  Rating: '" + v + "'}",
+            headers: {
+                "__RequestVerificationToken": token
+            },
+            data: "{Title: '" + titlee + "', BookId: '" + bookid + "', Text: '" + texte + "',  Rating: '" + v + "'}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            error: function (response) {
-                alert(response.responseText);
-            },
-            success: function (response) {
-                alert(response);
+            success: function refresh() {
+                location.reload();
             }
         });
     });
